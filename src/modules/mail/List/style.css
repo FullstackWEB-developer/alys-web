@@ -52,8 +52,20 @@
   opacity: 0.8;
 }
 
-.mail-list td {
-  
+.mail-list tr:first td:first {
+  border-top-left-radius: 5px;
+}
+
+.mail-list tr:first td:end {
+  border-top-right-radius: 5px;
+}
+
+.mail-list tr:end td:first {
+  border-bottom-left-radius: 5px;
+}
+
+.mail-list tr:end td:end {
+  border-bottom-right-radius: 5px;
 }
 
 .mail-list td, .mail-list th {
@@ -69,16 +81,4 @@
 .mail-list tr:first-child {
   background-color: #278327;
   color: white;
-}
-
-.card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    word-wrap: break-word;
-    background-color: #fff;
-    background-clip: border-box;
-    border: 0 solid rgba(34, 41, 47, 0.125);
-    border-radius: 0.428rem;
 }
