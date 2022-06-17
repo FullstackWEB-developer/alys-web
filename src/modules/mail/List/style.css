@@ -52,19 +52,19 @@
   opacity: 0.8;
 }
 
-.mail-list tr:first td:first {
+.mail-list tr:first-child td:first-child {
   border-top-left-radius: 5px;
 }
 
-.mail-list tr:first td:end {
+.mail-list tr:first-child td:last-child {
   border-top-right-radius: 5px;
 }
 
-.mail-list tr:end td:first {
+.mail-list tr:last-child td:first-child {
   border-bottom-left-radius: 5px;
 }
 
-.mail-list tr:end td:end {
+.mail-list tr:last-child td:last-child {
   border-bottom-right-radius: 5px;
 }
 
