@@ -1,0 +1,62 @@
+.mail-list {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  max-width: 30rem;
+}
+
+.mail-list > form {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--grey-light);
+  padding: 1rem;
+}
+
+.mail-list > aside {
+  margin-top: 2rem;
+}
+
+.mail-list > aside > .list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5rem;
+}
+
+.mail-list > aside > .list > .item {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid var(--grey);
+  padding: 0.5rem 0;
+}
+.mail-list > aside > .list > .item:last-child {
+  border: none;
+}
+.mail-list > aside > .list > .item > .info {
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+  color: var(--grey-dark);
+}
+.mail-list > aside > .list > .item > .info > span {
+  cursor: pointer;
+}
+
+.mail-list table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.mail-list td, .mail-list th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+.mail-list tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.mail-list tr:first-child {
+  background-color: #278327;
+  color: white;
+}
