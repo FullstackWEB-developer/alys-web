@@ -40,10 +40,16 @@
   cursor: pointer;
 }
 
+/* table */
 .mail-list table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
+  border-radius: 10px;
   width: 100%;
+}
+
+.mail-list tr:hover {
+  opacity: 0.8;
 }
 
 .mail-list td, .mail-list th {

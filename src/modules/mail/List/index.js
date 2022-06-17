@@ -137,20 +137,22 @@ const List = () => {
               <th>Image</th>
             </tr>
             {mails.length === 0 ? (
-              <p>You have not added any mails.</p>
+              <tr>
+                <p>You have not added any mails.</p>
+              </tr>
             ) : (
               mails.map((mail, i) => {
                 return (
                   <tr key={i}>
                     <td>zara</td>
                     <td>{mail.name}</td>
-                    <td>{mail.size}</td>
+                    <td></td>
                     <td>{mail.color}</td>
                     <td>{mail.size}</td>
-                    <td>{}</td>
+                    <td>{ }</td>
                     <td>{mail.price}</td>
-                    <td>SPECIFICATIONS TBC</td>
-                    <td><img src={mail.img} alt={mail.name} /></td>
+                    <td></td>
+                    <td><img src={mail.img} alt={mail.name} height={50} /></td>
                   </tr>
                 )
               })
