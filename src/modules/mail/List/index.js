@@ -115,7 +115,7 @@ const List = () => {
 
         <aside>
           <h4>
-            Your mails:{' '}
+            Your orders:{' '}
             {isLoading && (
               <img
                 src={`${URL_WEB}/images/loader.gif`}
@@ -124,40 +124,42 @@ const List = () => {
               />
             )}
           </h4>
-          <table>
-            <tr>
-              <th>BRAND</th>
-              <th>PRODUCT NAME</th>
-              <th>CATEGORY</th>
-              <th>COLOUR</th>
-              <th>SIZE</th>
-              <th>DATE PURCHASED</th>
-              <th>PRICE</th>
-              <th>SPECIFICATIONS TBC</th>
-              <th>Image</th>
-            </tr>
-            {mails.length === 0 ? (
+          <div className='card'>
+            <table>
               <tr>
-                <p>You have not added any mails.</p>
+                <th>BRAND</th>
+                <th>PRODUCT NAME</th>
+                <th>CATEGORY</th>
+                <th>COLOUR</th>
+                <th>SIZE</th>
+                <th>DATE PURCHASED</th>
+                <th>PRICE</th>
+                <th>SPECIFICATIONS TBC</th>
+                <th>Image</th>
               </tr>
-            ) : (
-              mails.map((mail, i) => {
-                return (
-                  <tr key={i}>
-                    <td>zara</td>
-                    <td>{mail.name}</td>
-                    <td></td>
-                    <td>{mail.color}</td>
-                    <td>{mail.size}</td>
-                    <td>{ }</td>
-                    <td>{mail.price}</td>
-                    <td></td>
-                    <td><img src={mail.img} alt={mail.name} height={50} /></td>
-                  </tr>
-                )
-              })
-            )}
-          </table>
+              {mails.length === 0 ? (
+                <tr>
+                  <td colspan="9" style={{ textAlign: 'center' }}>You have not added any mails.</td>
+                </tr>
+              ) : (
+                mails.map((mail, i) => {
+                  return (
+                    <tr key={i}>
+                      <td>zara</td>
+                      <td>{mail.name}</td>
+                      <td></td>
+                      <td>{mail.color}</td>
+                      <td>{mail.size}</td>
+                      <td>{ }</td>
+                      <td>{mail.price}</td>
+                      <td></td>
+                      <td><img src={mail.img} alt={mail.name} height={50} /></td>
+                    </tr>
+                  )
+                })
+              )}
+            </table>
+          </div>
           {/* <div className='list'>
             {mails.length === 0 ? (
               <p>You have not added any mails.</p>
