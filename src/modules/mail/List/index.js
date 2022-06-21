@@ -56,6 +56,7 @@ const List = () => {
   const [mails, setMails] = useState([])
   const mailEmpty = { text: '' }
   const [mail, setMail] = useState(mailEmpty)
+  const [checked, setChecked] = useState('');
 
   // on load
   useEffect(() => {
@@ -141,17 +142,14 @@ const List = () => {
 
 
   const GetMailCheckbox = ({ name, value}) => {
-    const [checked, setChecked] = useState(false);
-
     return (
       <Checkbox
         disableRipple
         className="m-32 ml-0 p-0"
-        checked={checked}
+        checked={checked === name}
         disabled={isLoading}
         onChange={() => {
-          if (!checked) handleChange({ name, value });
-          setChecked(!checked);
+          if (!checked) handleChange({ name, value }).then(() => setChecked(name));
         }}
         icon={
           <UnSelectedButton variant="contained" color="primary">
