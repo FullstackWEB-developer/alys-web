@@ -140,14 +140,18 @@ const List = () => {
   }
 
 
-  const getMailCheckbox = ({ name, value}) => {
+  const GetMailCheckbox = ({ name, value}) => {
+    const [checked, setChecked] = useState(false);
 
     return (
       <Checkbox
         // disableRipple
         className="m-32 ml-0 p-0"
-        // checked={brand.isSelected}
-        onChange={() => handleChange({ name, value })}
+        checked={checked}
+        onChange={() => {
+          if (checked) handleChange({ name, value });
+          setChecked(!checked);
+        }}
         icon={
           <UnSelectedButton variant="contained" color="primary">
             {name}
@@ -195,7 +199,7 @@ const List = () => {
           {brands.map((brand, index) => {
             return (
               <div className='mail-list-header-item' key={index}>
-                {getMailCheckbox(brand)}
+                <GetMailCheckbox name={brand.name} value={brand.value} />
               </div>
             )
           })}
