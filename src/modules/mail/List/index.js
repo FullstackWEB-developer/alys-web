@@ -145,9 +145,10 @@ const List = () => {
 
     return (
       <Checkbox
-        // disableRipple
+        disableRipple
         className="m-32 ml-0 p-0"
         checked={checked}
+        disabled={isLoading}
         onChange={() => {
           if (!checked) handleChange({ name, value });
           setChecked(!checked);
