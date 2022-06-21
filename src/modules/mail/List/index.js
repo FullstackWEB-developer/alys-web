@@ -149,7 +149,7 @@ const List = () => {
         className="m-32 ml-0 p-0"
         checked={checked}
         onChange={() => {
-          if (checked) handleChange({ name, value });
+          if (!checked) handleChange({ name, value });
           setChecked(!checked);
         }}
         icon={
