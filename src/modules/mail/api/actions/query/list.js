@@ -5,8 +5,9 @@ import axios from 'axios'
 import { URL_API } from 'setup/config/env'
 
 // Get list
-export default function list() {
+export default function list(params) {
   return axios.post(URL_API, {
     operation: 'mailList',
+    params
   })
 }

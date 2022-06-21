@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  max-width: 30rem;
+  /* max-width: 30rem; */
 }
 
 .mail-list > form {
@@ -52,11 +52,20 @@
   opacity: 0.8;
 }
 
-.mail-list tr:first-child td:first-child {
+.mail-list-header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.mail-list-header-item {
+}
+
+.mail-list tr:first-child th:first-child {
   border-top-left-radius: 5px;
 }
 
-.mail-list tr:first-child td:last-child {
+.mail-list tr:first-child th:last-child {
   border-top-right-radius: 5px;
 }
 

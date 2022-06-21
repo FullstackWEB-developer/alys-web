@@ -4,8 +4,8 @@ import { Helmet } from 'react-helmet'
 import moment from 'moment'
 
 // UI imports
-import Button from 'ui/Button'
-import Input from 'ui/Input'
+// import Button from 'ui/Button'
+// import Input from 'ui/Input'
 import './style.css'
 
 // App imports
@@ -13,6 +13,41 @@ import params from 'setup/config/params'
 import { list } from 'modules/mail/api/actions/query'
 import { save, remove } from 'modules/mail/api/actions/mutation'
 import { URL_WEB } from 'setup/config/env'
+import { Checkbox, Button } from '@mui/material'
+import CheckIcon from '@mui/icons-material/Check';
+import styled from '@emotion/styled';
+// import { styled } from '@mui/system';
+
+const UnSelectedButton = styled(Button)`
+    background: #E3E9EE;
+    color: #34A196;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 10px 20px;
+    height: 44px;
+    border-radius: 100px;
+`;
+
+const SelectedButton = styled(Button)`
+    background: #34A196;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 10px 20px;
+    height: 44px;
+    border-radius: 100px;
+`;
+
+const brands = [
+  { name: 'zara', value: 'noreply@zara.com' },
+  // { name: 'nike', value: 'nike.com' },
+  { name: 'zalando', value: 'nfo@service-mail.zalando.co.uk' },
+  { name: 'marksandspencer', value: 'email@service.marksandspencer.com' },
+  { name: 'ikea', value: 'do-not-reply@ikea.com' },
+  { name: 'next', value: 'DoNotReply@next.co.uk' },
+  // { name: 'asos', value: 'no-reply@reviews.asos.com' },
+]
+
 
 // Component
 const List = () => {
@@ -33,6 +68,22 @@ const List = () => {
 
     try {
       const { data } = await list()
+
+      if (data.success && data.data) {
+        setMails(data.data)
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+      isLoadingToggle(false)
+    }
+  }
+
+  // refresh
+  const handleChange = async (brand) => {
+    isLoadingToggle(true)
+    try {
+      const { data } = await list(brand)
 
       if (data.success && data.data) {
         setMails(data.data)
@@ -88,6 +139,33 @@ const List = () => {
     }
   }
 
+
+  const getMailCheckbox = ({ name, value}) => {
+
+    return (
+      <Checkbox
+        // disableRipple
+        className="m-32 ml-0 p-0"
+        // checked={brand.isSelected}
+        onChange={() => handleChange({ name, value })}
+        icon={
+          <UnSelectedButton variant="contained" color="primary">
+            {name}
+          </UnSelectedButton>
+        }
+        checkedIcon={
+          <SelectedButton
+            variant="contained"
+            color="primary"
+            startIcon={<CheckIcon />}
+          >
+            {name}
+          </SelectedButton>
+        }
+      />
+    );
+  };
+
   // render
   return (
     <>
@@ -112,6 +190,16 @@ const List = () => {
             <Button title='Save' type='submit' />
           </div>
         </form> */}
+
+        <div className='mail-list-header'>
+          {brands.map((brand, index) => {
+            return (
+              <div className='mail-list-header-item' key={index}>
+                {getMailCheckbox(brand)}
+              </div>
+            )
+          })}
+        </div>
 
         <aside>
           <h4>
@@ -144,7 +232,7 @@ const List = () => {
               mails.map((mail, i) => {
                 return (
                   <tr key={i}>
-                    <td>zara</td>
+                    <td>{mail.brand}</td>
                     <td>{mail.name}</td>
                     <td></td>
                     <td>{mail.color}</td>
