@@ -56,7 +56,8 @@ const List = () => {
   const [mails, setMails] = useState([])
   const mailEmpty = { text: '' }
   const [mail, setMail] = useState(mailEmpty)
-  const [checked, setChecked] = useState('');
+  // const [checked, setChecked] = useState([]);
+  // console.log("🚀 ~ file: index.js ~ line 60 ~ List ~ checked", checked)
 
   // on load
   useEffect(() => {
@@ -142,15 +143,35 @@ const List = () => {
 
 
   const GetMailCheckbox = ({ name, value}) => {
+    const [checked, setChecked] = useState(name);
+    console.log("🚀 ~ file: index.js ~ line 147 ~ GetMailCheckbox ~ checked", checked)
     return (
       <Checkbox
         disableRipple
         className="m-32 ml-0 p-0"
         checked={checked === name}
+        // checked={checked.indexOf(name) > -1}
         disabled={isLoading}
         onChange={() => {
-          if (!checked) handleChange({ name, value }).then(() => setChecked(name));
+          if (checked !== name) {
+            handleChange({ name, value }).then(() => setChecked(name));
+          } else {
+            setChecked('')
+          }
         }}
+        // onChange={(e) => {
+        //   if (checked.indexOf(name) > -1) {
+        //     for (var i = 0; i < checked.length; i++) {
+        //       if (checked[i] === name) {
+        //         checked.splice(i, 1);
+        //         console.log("🚀 ~ file: index.js ~ line 157 ~ GetMailCheckbox ~ checked", checked)
+        //         setChecked(checked)
+        //       }
+        //     }
+        //   } else {
+        //     handleChange({ name, value }).then(() => setChecked([...checked, name]))
+        //   }
+        // }}
         icon={
           <UnSelectedButton variant="contained" color="primary">
             {name}
