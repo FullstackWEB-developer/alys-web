@@ -134,7 +134,6 @@ const GetMailCheckbox = ({
 const List = () => {
   // state
   const [isLoading, isLoadingToggle] = useState(false)
-  // const [mails, setMails] = useState([])
   const [mails, setMails] = useState([])
   const mailEmpty = { text: '' }
   const [mail, setMail] = useState(mailEmpty)
@@ -278,7 +277,7 @@ const List = () => {
               <th>SPECIFICATIONS TBC</th>
               <th>Image</th>
             </tr>
-            {(mails.length === 0) ? (
+            {(mails.length === 0 || isLoading) ? (
               <tr>
                 <td colSpan={9} style={{ textAlign: 'center' }}>
                   You have not added any mails.
