@@ -52,28 +52,23 @@ const brands = [
 ]
 
 const GetMailCheckbox = ({
-  name,
-  value,
-  // isChecked,
+  // name,
+  // value,
+  brand,
+  isChecked,
   // setChecked,
   isLoading,
   isLoadingToggle,
   setMails,
 }) => {
-  // const dispatch = useDispatch()
-  const [isChecked, setIsChecked] = useState(false);
-  console.log(
-    '🚀 ~ file: index.js ~ line 148 ~ GetMailCheckbox ~ isChecked',
-    isChecked,
-  )
-  // useEffect(() => {
-  //   setIsChecked(checked)
-  // }, [isChecked])
+  const dispatch = useDispatch()
+  // const [isChecked, setIsChecked] = useState(false);
+  console.log("🚀 ~ file: index.js ~ line 66 ~ isChecked", isChecked)
 
-  const handleChange = async (brand) => {
+  const handleChange = async (params) => {
     isLoadingToggle(true)
     try {
-      const { data } = await list(brand)
+      const { data } = await list(params)
 
       if (data.success && data.data) {
         setMails(data.data)
@@ -89,43 +84,37 @@ const GetMailCheckbox = ({
     <Checkbox
       disableRipple
       sx={{p:0, m:'10px'}}
-      checked={isChecked}
-      // checked={(isChecked.indexOf(name) > -1) || isCheckedd}
+      checked={isChecked.findIndex((element) => element.name === brand.name) > -1}
       disabled={isLoading}
       onChange={(e) => {
-        if (isChecked) {
-        // if (isChecked.indexOf(name) > -1) {
-          // isLoadingToggle(true)
-          // for (var i = 0; i < isChecked.length; i++) {
-          //   if (isChecked[i] === name) {
-          //     isChecked.splice(i, 1)
-          //     console.log(
-          //       '🚀 ~ file: index.js ~ line 157 ~ GetMailCheckbox ~ isChecked',
-          //       isChecked,
-          //     )
-          //     // dispatch({
-          //     //   type: SET_CHECK,
-          //     //   payload: isChecked
-          //     // })
-          //     // setIsCheckedd(true)
-          //     isLoadingToggle(false)
-          //   }
-          // }
-              setIsChecked(false)
+        if (isChecked.findIndex((element) => element.name === brand.name) > -1) {
+          isLoadingToggle(true)
+          for (var i = 0; i < isChecked.length; i++) {
+            if (isChecked[i].name === brand.name) {
+              isChecked.splice(i, 1)
+              handleChange(isChecked).then(() => {
+                dispatch({
+                  type: SET_CHECK,
+                  payload: isChecked
+                })
+              isLoadingToggle(false)
+              })
+            }
+          }
+              // setIsChecked(false)
         } else {
-          handleChange({ name, value }).then(() => {
-            // dispatch({
-            //   type: SET_CHECK,
-            //   payload: [...isChecked, name]
-            // })
-            setIsChecked(true)
-            // setIsCheckedd(true);
+          handleChange([...isChecked, brand]).then(() => {
+            dispatch({
+              type: SET_CHECK,
+              payload: [...isChecked, brand]
+            })
+            // setIsChecked(true)
           })
         }
       }}
       icon={
         <UnSelectedButton variant='contained' color='primary'>
-          {name}
+          {brand.name}
         </UnSelectedButton>
       }
       checkedIcon={
@@ -134,7 +123,7 @@ const GetMailCheckbox = ({
           color='primary'
           startIcon={<CheckIcon />}
         >
-          {name}
+          {brand.name}
         </SelectedButton>
       }
     />
@@ -151,17 +140,12 @@ const List = () => {
   const [mail, setMail] = useState(mailEmpty)
   // const [checked, setChecked] = useState([])
   const checked = useSelector((state) => state.mail.check)
-  console.log('🚀 ~ file: index.js ~ line 67 ~ List ~ checked', checked)
+  // console.log('🚀 ~ file: index.js ~ line 67 ~ List ~ checked', checked)
 
   // on load
   useEffect(() => {
     refresh()
   }, [])
-
-  useEffect(() => {
-    // refresh()
-    console.log('🚀 ~ file: index.js ~ line 70 ~ useEffect ~ refresh', checked)
-  }, [checked])
 
   // refresh
   const refresh = async () => {
@@ -254,9 +238,9 @@ const List = () => {
             return (
               <div className='mail-list-header-item' key={brand.id}>
                 <GetMailCheckbox
-                  name={brand.name}
-                  value={brand.value}
-                  // isChecked={checked}
+                  brand={brand}
+                  // value={brand.value}
+                  isChecked={checked}
                   // setChecked={setChecked}
                   isLoading={isLoading}
                   isLoadingToggle={isLoadingToggle}
