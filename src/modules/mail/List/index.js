@@ -63,7 +63,7 @@ const GetMailCheckbox = ({
 }) => {
   const dispatch = useDispatch()
   // const [isChecked, setIsChecked] = useState(false);
-  console.log("🚀 ~ file: index.js ~ line 66 ~ isChecked", isChecked)
+  // console.log("🚀 ~ file: index.js ~ line 66 ~ isChecked", isChecked)
 
   const handleChange = async (params) => {
     isLoadingToggle(true)
@@ -146,6 +146,10 @@ const List = () => {
   useEffect(() => {
     refresh()
   }, [])
+
+  useEffect(() => {
+    if (checked.length === 0) setMails([])
+  }, [checked])
 
   // refresh
   const refresh = async () => {
@@ -274,7 +278,7 @@ const List = () => {
               <th>SPECIFICATIONS TBC</th>
               <th>Image</th>
             </tr>
-            {(mails.length === 0 && isLoading) ? (
+            {(mails.length === 0) ? (
               <tr>
                 <td colSpan={9} style={{ textAlign: 'center' }}>
                   You have not added any mails.
