@@ -274,9 +274,9 @@ const List = () => {
               <th>SPECIFICATIONS TBC</th>
               <th>Image</th>
             </tr>
-            {mails.length === 0 ? (
+            {(mails.length === 0 && isLoading) ? (
               <tr>
-                <td colspan='9' style={{ textAlign: 'center' }}>
+                <td colSpan={9} style={{ textAlign: 'center' }}>
                   You have not added any mails.
                 </td>
               </tr>
