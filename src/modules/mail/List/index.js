@@ -72,6 +72,8 @@ const GetMailCheckbox = ({
 
       if (data.success && data.data) {
         setMails(data.data)
+      } else {
+        setMails([])
       }
     } catch (error) {
       console.log(error)
@@ -159,6 +161,8 @@ const List = () => {
 
       if (data.success && data.data) {
         setMails(data.data)
+      } else {
+        setMails([])
       }
     } catch (error) {
       console.log(error)
