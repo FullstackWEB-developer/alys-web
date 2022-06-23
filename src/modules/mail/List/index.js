@@ -271,6 +271,7 @@ const List = () => {
           </h4>
           <table>
             <tr>
+              <th>#</th>
               <th>BRAND</th>
               <th>PRODUCT NAME</th>
               <th>CATEGORY</th>
@@ -283,7 +284,7 @@ const List = () => {
             </tr>
             {(mails.length === 0 || isLoading) ? (
               <tr>
-                <td colSpan={9} style={{ textAlign: 'center' }}>
+                <td colSpan={10} style={{ textAlign: 'center' }}>
                   {isLoading ? (
                     <img
                       src={`${URL_WEB}/images/loader.gif`}
@@ -297,6 +298,7 @@ const List = () => {
               mails.map((mail, i) => {
                 return (
                   <tr key={i}>
+                    <td>{i + 1}</td>
                     <td>{mail.brand}</td>
                     <td>{mail.productName}</td>
                     <td>{mail.category}</td>
