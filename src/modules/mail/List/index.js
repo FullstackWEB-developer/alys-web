@@ -44,7 +44,7 @@ const SelectedButton = styled(Button)`
 const brands = [
   { name: 'zara', value: 'noreply@zara.com' },
   // { name: 'nike', value: 'nike.com' },
-  { name: 'zalando', value: 'nfo@service-mail.zalando.co.uk' },
+  { name: 'zalando', value: 'info@service-mail.zalando.co.uk' },
   { name: 'marksandspencer', value: 'email@service.marksandspencer.com' },
   { name: 'ikea', value: 'do-not-reply@ikea.com' },
   { name: 'next', value: 'DoNotReply@next.co.uk' },
