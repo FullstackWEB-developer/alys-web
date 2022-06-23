@@ -284,7 +284,13 @@ const List = () => {
             {(mails.length === 0 || isLoading) ? (
               <tr>
                 <td colSpan={9} style={{ textAlign: 'center' }}>
-                  You have not added any mails.
+                  {isLoading ? (
+                    <img
+                      src={`${URL_WEB}/images/loader.gif`}
+                      alt='loading...'
+                      height={24}
+                    />
+                  ) : 'You have not added any mails.'}
                 </td>
               </tr>
             ) : (
