@@ -304,7 +304,7 @@ const List = () => {
                     <td>{mail.category}</td>
                     <td>{mail.color}</td>
                     <td>{mail.size}</td>
-                    <td>{moment(params.common.date).format('yyyy/MM/dd')}</td>
+                    <td>{moment(mail.orderDate).format('yyyy/MM/dd')}</td>
                     <td>{mail.price}</td>
                     <td></td>
                     <td>
