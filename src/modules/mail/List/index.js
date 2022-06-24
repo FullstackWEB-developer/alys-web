@@ -243,7 +243,7 @@ const List = () => {
         <div className='mail-list-header'>
           {brands.map((brand) => {
             return (
-              <div className='mail-list-header-item' key={brand.id}>
+              <div className='mail-list-header-item' key={brand.name}>
                 <GetMailCheckbox
                   brand={brand}
                   // value={brand.value}
@@ -304,7 +304,7 @@ const List = () => {
                     <td>{mail.category}</td>
                     <td>{mail.color}</td>
                     <td>{mail.size}</td>
-                    <td>{moment(mail.orderDate).format('yyyy/MM/dd')}</td>
+                    <td>{moment(new Date(mail.orderDate)).format('yyyy/MM/DD')}</td>
                     <td>{mail.price}</td>
                     <td></td>
                     <td>
