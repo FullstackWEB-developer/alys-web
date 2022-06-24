@@ -85,7 +85,7 @@ const GetMailCheckbox = ({
   return (
     <Checkbox
       disableRipple
-      sx={{p:0, m:'10px'}}
+      sx={{ p: 0, m: '10px' }}
       checked={isChecked.findIndex((element) => element.name === brand.name) > -1}
       disabled={isLoading}
       onChange={(e) => {
@@ -99,11 +99,11 @@ const GetMailCheckbox = ({
                   type: SET_CHECK,
                   payload: isChecked
                 })
-              isLoadingToggle(false)
+                isLoadingToggle(false)
               })
             }
           }
-              // setIsChecked(false)
+          // setIsChecked(false)
         } else {
           handleChange([...isChecked, brand]).then(() => {
             dispatch({
@@ -304,7 +304,10 @@ const List = () => {
                     <td>{mail.category}</td>
                     <td>{mail.color}</td>
                     <td>{mail.size}</td>
-                    <td>{mail.orderDate}</td>
+                    <td>{format(
+                      new Date(mail.orderDate),
+                      'yyyy/MM/dd',
+                    )}</td>
                     <td>{mail.price}</td>
                     <td></td>
                     <td>
