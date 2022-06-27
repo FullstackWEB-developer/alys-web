@@ -42,13 +42,13 @@ const SelectedButton = styled(Button)`
 `
 
 const brands = [
-  { name: 'zara', value: 'noreply@zara.com' },
-  // { name: 'nike', value: 'nike.com' },
-  { name: 'zalando', value: 'info@service-mail.zalando.co.uk' },
-  { name: 'marksandspencer', value: 'email@service.marksandspencer.com' },
-  { name: 'ikea', value: 'do-not-reply@ikea.com' },
-  { name: 'next', value: 'DoNotReply@next.co.uk' },
-  // { name: 'asos', value: 'no-reply@reviews.asos.com' },
+    { name: 'zara', value: 'from:noreply@zara.com "thank you for your purchase"' },
+    { name: 'zalando', value: 'from:info@service-mail.zalando.co.uk  "Order number"'},
+    { name: 'marksandspencer', value: 'from:email@service.marksandspencer.com' },
+    { name: 'ikea', value: 'from:do-not-reply@ikea.com' },
+    { name: 'next', value: 'from:DoNotReply@next.co.uk' },
+    // { name: 'nike', value: 'from:nike.com' },
+    // { name: 'asos', value: 'from:no-reply@reviews.asos.com' },
 ]
 
 const GetMailCheckbox = ({
