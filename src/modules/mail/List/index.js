@@ -42,13 +42,13 @@ const SelectedButton = styled(Button)`
 `
 
 const brands = [
-    { name: 'zara', value: 'from:noreply@zara.com "thank you for your purchase"' },
-    { name: 'zalando', value: 'from:info@service-mail.zalando.co.uk  "Order number"'},
-    { name: 'marksandspencer', value: 'from:email@service.marksandspencer.com' },
-    { name: 'ikea', value: 'from:do-not-reply@ikea.com' },
-    { name: 'next', value: 'from:DoNotReply@next.co.uk' },
-    // { name: 'nike', value: 'from:nike.com' },
-    // { name: 'asos', value: 'from:no-reply@reviews.asos.com' },
+    'zara',
+    'zalando',
+    'marksandspencer',
+    'ikea',
+    'next',
+    // 'nike',
+    // 'asos',
 ]
 
 const GetMailCheckbox = ({
@@ -246,7 +246,6 @@ const List = () => {
               <div className='mail-list-header-item' key={brand.name}>
                 <GetMailCheckbox
                   brand={brand}
-                  // value={brand.value}
                   isChecked={checked}
                   // setChecked={setChecked}
                   isLoading={isLoading}
