@@ -86,13 +86,13 @@ const GetMailCheckbox = ({
     <Checkbox
       disableRipple
       sx={{ p: 0, m: '10px' }}
-      checked={isChecked.findIndex((element) => element.name === brand.name) > -1}
+      checked={isChecked.findIndex((element) => element === brand) > -1}
       disabled={isLoading}
       onChange={(e) => {
-        if (isChecked.findIndex((element) => element.name === brand.name) > -1) {
+        if (isChecked.findIndex((element) => element === brand) > -1) {
           isLoadingToggle(true)
           for (var i = 0; i < isChecked.length; i++) {
-            if (isChecked[i].name === brand.name) {
+            if (isChecked[i] === brand) {
               isChecked.splice(i, 1)
               handleChange(isChecked).then(() => {
                 dispatch({
@@ -116,7 +116,7 @@ const GetMailCheckbox = ({
       }}
       icon={
         <UnSelectedButton variant='contained' color='primary'>
-          {brand.name}
+          {brand}
         </UnSelectedButton>
       }
       checkedIcon={
@@ -125,7 +125,7 @@ const GetMailCheckbox = ({
           color='primary'
           startIcon={<CheckIcon />}
         >
-          {brand.name}
+          {brand}
         </SelectedButton>
       }
     />
@@ -243,7 +243,7 @@ const List = () => {
         <div className='mail-list-header'>
           {brands.map((brand) => {
             return (
-              <div className='mail-list-header-item' key={brand.name}>
+              <div className='mail-list-header-item' key={brand}>
                 <GetMailCheckbox
                   brand={brand}
                   isChecked={checked}
