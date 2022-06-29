@@ -7,6 +7,7 @@ import moment from 'moment'
 // UI imports
 // import Button from 'ui/Button'
 // import Input from 'ui/Input'
+import { showMessage } from 'setup/messageSlice';
 import './style.css'
 
 // App imports
@@ -16,7 +17,7 @@ import { list } from 'modules/mail/api/actions/query'
 import { save, remove } from 'modules/mail/api/actions/mutation'
 import { URL_WEB } from 'setup/config/env'
 
-import { Checkbox, Button } from '@mui/material'
+import { Checkbox, Button, Alert } from '@mui/material'
 import CheckIcon from '@mui/icons-material/Check'
 import styled from '@emotion/styled'
 // import { styled } from '@mui/system';
@@ -74,9 +75,22 @@ const GetMailCheckbox = ({
         setMails(data.data)
       } else {
         setMails([])
+        dispatch(
+          showMessage({
+            message: `There is no Order!`,
+            variant: 'error',
+          })
+        );
       }
     } catch (error) {
       console.log(error)
+      dispatch(
+        showMessage({
+          message: error.message,
+          autoHideDuration: 2000,
+          variant: 'error',
+        })
+      );
     } finally {
       isLoadingToggle(false)
     }
@@ -165,9 +179,22 @@ const List = () => {
         setMails(data.data)
       } else {
         setMails([])
+        dispatch(
+          showMessage({
+            message: `There is no Order!`,
+            variant: 'error',
+          })
+        );
       }
     } catch (error) {
       console.log(error)
+      dispatch(
+        showMessage({
+          message: error.message,
+          autoHideDuration: 2000,
+          variant: 'error',
+        })
+      );
     } finally {
       isLoadingToggle(false)
     }

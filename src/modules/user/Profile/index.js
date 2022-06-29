@@ -10,7 +10,7 @@ import './style.css'
 
 // App imports
 import params from 'setup/config/params'
-import { logout, profile } from 'modules/user/api/actions/query'
+import { logout, profile } from 'modules/user/api/loginSlice'
 
 // Component
 const Dashboard = () => {

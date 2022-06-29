@@ -36,11 +36,11 @@ const routes = {
   },
 
   // note list
-  noteList: {
-    path: '/notes',
-    component: NoteList,
-    auth: true,
-  },
+  // noteList: {
+  //   path: '/notes',
+  //   component: NoteList,
+  //   auth: true,
+  // },
   
   // note list
   mailList: {

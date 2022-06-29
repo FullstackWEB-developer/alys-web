@@ -12,10 +12,10 @@ import { URL_WEB } from 'setup/config/env'
 import params from 'setup/config/params'
 import routes from 'setup/routes'
 import {
-  loginSetUser,
-  loginSetUserLocalStorage,
-} from 'modules/user/api/actions/query'
-import { authorize } from 'modules/user/api/actions/mutation'
+  setUserData,
+} from 'modules/user/api/loginSlice'
+import loginSetUserLocalStorage from 'modules/user/api/loginSetUserLocalStorage'
+import { authorize } from 'modules/user/api/loginSlice'
 
 // Component
 const Authorize = ({ history, location }) => {
@@ -41,7 +41,7 @@ const Authorize = ({ history, location }) => {
           const jwtToken = data.data.jwtToken
           const user = data.data.user
 
-          dispatch(loginSetUser(jwtToken, user))
+          dispatch(setUserData(user))
 
           loginSetUserLocalStorage(jwtToken, user)
 
