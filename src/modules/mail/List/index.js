@@ -11,7 +11,7 @@ import './style.css'
 
 // App imports
 import params from 'setup/config/params'
-import { SET_CHECK } from 'modules/mail/api/actions/types'
+import { SET_CHECK, SET_INIT } from 'modules/mail/api/actions/types'
 import { list } from 'modules/mail/api/actions/query'
 import { save, remove } from 'modules/mail/api/actions/mutation'
 import { URL_WEB } from 'setup/config/env'
@@ -134,6 +134,7 @@ const GetMailCheckbox = ({
 
 // Component
 const List = () => {
+  const dispatch = useDispatch()
   // state
   const [isLoading, isLoadingToggle] = useState(false)
   const [mails, setMails] = useState([])
@@ -146,6 +147,7 @@ const List = () => {
   // on load
   useEffect(() => {
     refresh()
+    return () => dispatch({ type: SET_INIT })
   }, [])
 
   useEffect(() => {

@@ -2,7 +2,7 @@
 import isEmpty from 'lodash/isEmpty'
 
 // App Imports
-import { SET_CHECK } from '../actions/types'
+import { SET_CHECK, SET_INIT } from '../actions/types'
 
 // Mail (user)
 
@@ -21,8 +21,8 @@ export default function mail(state = initialState, action) {
         check: action.payload,
       }
 
-    // case LOGOUT:
-    //   return initialState
+    case SET_INIT:
+      return initialState
 
     default:
       return state

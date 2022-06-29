@@ -1,11 +1,11 @@
 // Params
 export const params = {
   site: {
-    name: 'OAuth',
-    description: 'OAuth 2.0 examples for various providers in one place',
-    author: 'Atul Yadav',
-    url: 'https://github.com/atulmy/oauth',
-    copyright: '© 2020',
+    name: 'ALYS MVP',
+    description: '',
+    author: '',
+    url: '',
+    copyright: '© 2022',
   },
 
   // common
