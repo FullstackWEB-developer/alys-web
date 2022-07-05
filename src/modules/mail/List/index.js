@@ -48,6 +48,7 @@ const brands = [
     'marksandspencer',
     'ikea',
     'next',
+    'wayfair',
     // 'nike',
     // 'asos',
 ]
