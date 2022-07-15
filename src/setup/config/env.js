@@ -24,3 +24,6 @@ export const OAUTH_AZURE_TENANT = process.env.REACT_APP_OAUTH_AZURE_TENANT
 export const OAUTH_SPOTIFY_ID = process.env.REACT_APP_OAUTH_SPOTIFY_ID
 export const OAUTH_SHOPIFY_ID = process.env.REACT_APP_OAUTH_SHOPIFY_ID
 export const OAUTH_SHOPIFY_STORE = process.env.REACT_APP_OAUTH_SHOPIFY_STORE
+
+export const OAUTH_EBAY_ID = process.env.OAUTH_EBAY_ID
+export const OAUTH_EBAY_SECRET = process.env.OAUTH_EBAY_SECRET

@@ -91,3 +91,9 @@
   background-color: #278327;
   color: white;
 }
+
+.list-modal-container {
+  display: flex;
+  /* padding-top: 40px !important; */
+  flex-direction: column;
+}

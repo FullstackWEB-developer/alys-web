@@ -4,11 +4,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import moment from 'moment'
 
+import { Pagination, PaginationItem } from '@mui/material';
+
 // UI imports
 // import Button from 'ui/Button'
 // import Input from 'ui/Input'
 import { showMessage } from 'setup/messageSlice';
 import './style.css'
+import GetMailCheckbox from './checkbox'
+import InventoryModal from './modal'
 
 // App imports
 import params from 'setup/config/params'
@@ -17,30 +21,10 @@ import { list } from 'modules/mail/api/actions/query'
 import { save, remove } from 'modules/mail/api/actions/mutation'
 import { URL_WEB } from 'setup/config/env'
 
-import { Checkbox, Button, Alert } from '@mui/material'
-import CheckIcon from '@mui/icons-material/Check'
-import styled from '@emotion/styled'
+// import { Checkbox, Button, Alert, Modal, TextField } from '@mui/material'
+// import CheckIcon from '@mui/icons-material/Check'
+// import styled from '@emotion/styled'
 // import { styled } from '@mui/system';
-
-const UnSelectedButton = styled(Button)`
-  background: #e3e9ee;
-  color: #34a196;
-  font-size: 16px;
-  font-weight: 700;
-  padding: 10px 20px;
-  height: 44px;
-  border-radius: 100px;
-`
-
-const SelectedButton = styled(Button)`
-  background: #34a196;
-  color: white;
-  font-size: 16px;
-  font-weight: 700;
-  padding: 10px 20px;
-  height: 44px;
-  border-radius: 100px;
-`
 
 const brands = [
     'zara',
@@ -53,100 +37,6 @@ const brands = [
     // 'asos',
 ]
 
-const GetMailCheckbox = ({
-  // name,
-  // value,
-  brand,
-  isChecked,
-  // setChecked,
-  isLoading,
-  isLoadingToggle,
-  setMails,
-}) => {
-  const dispatch = useDispatch()
-  // const [isChecked, setIsChecked] = useState(false);
-  // console.log("🚀 ~ file: index.js ~ line 66 ~ isChecked", isChecked)
-
-  const handleChange = async (params) => {
-    isLoadingToggle(true)
-    try {
-      const { data } = await list(params)
-
-      if (data.success && data.data) {
-        setMails(data.data)
-      } else {
-        setMails([])
-        dispatch(
-          showMessage({
-            message: `There is no Order!`,
-            variant: 'error',
-          })
-        );
-      }
-    } catch (error) {
-      console.log(error)
-      dispatch(
-        showMessage({
-          message: error.message,
-          autoHideDuration: 2000,
-          variant: 'error',
-        })
-      );
-    } finally {
-      isLoadingToggle(false)
-    }
-  }
-
-  return (
-    <Checkbox
-      disableRipple
-      sx={{ p: 0, m: '10px' }}
-      checked={isChecked.findIndex((element) => element === brand) > -1}
-      disabled={isLoading}
-      onChange={(e) => {
-        if (isChecked.findIndex((element) => element === brand) > -1) {
-          isLoadingToggle(true)
-          for (var i = 0; i < isChecked.length; i++) {
-            if (isChecked[i] === brand) {
-              isChecked.splice(i, 1)
-              handleChange(isChecked).then(() => {
-                dispatch({
-                  type: SET_CHECK,
-                  payload: isChecked
-                })
-                isLoadingToggle(false)
-              })
-            }
-          }
-          // setIsChecked(false)
-        } else {
-          handleChange([...isChecked, brand]).then(() => {
-            dispatch({
-              type: SET_CHECK,
-              payload: [...isChecked, brand]
-            })
-            // setIsChecked(true)
-          })
-        }
-      }}
-      icon={
-        <UnSelectedButton variant='contained' color='primary'>
-          {brand}
-        </UnSelectedButton>
-      }
-      checkedIcon={
-        <SelectedButton
-          variant='contained'
-          color='primary'
-          startIcon={<CheckIcon />}
-        >
-          {brand}
-        </SelectedButton>
-      }
-    />
-  )
-}
-
 // Component
 const List = () => {
   const dispatch = useDispatch()
@@ -156,8 +46,20 @@ const List = () => {
   const mailEmpty = { text: '' }
   const [mail, setMail] = useState(mailEmpty)
   // const [checked, setChecked] = useState([])
+  const [onModal, setOnModal] = useState({
+    isOpen: false,
+    isLoading: false,
+    isError: false,
+    data: null,
+  })
+  console.log("🚀 ~ file: index.js ~ line 165 ~ List ~ onModal", onModal)
   const checked = useSelector((state) => state.mail.check)
   // console.log('🚀 ~ file: index.js ~ line 67 ~ List ~ checked', checked)
+
+  // const [page, setPage] = useState(1);
+  // const handleChange = (event, value) => {
+  //   setPage(value);
+  // };
 
   // on load
   useEffect(() => {
@@ -166,7 +68,27 @@ const List = () => {
   }, [])
 
   useEffect(() => {
-    if (checked.length === 0) setMails([])
+    if (checked.length === 0) setMails([
+    //   {brand: 'product.brand',
+    //   productName: 'product.productName',
+    //   color: 'product.color',
+    //   size: 'product.size',
+    //   orderDate: 'product.orderDate',
+    //   mailId: 1,
+    //   price: 'product.price',
+    //   img: 'product.img',
+    //   category: 'categoryList[i]',
+    // }, {
+    //   mailId: 2,
+    //   brand: 'product.brand2',
+    //   productName: 'product.productName2',
+    //   color: 'product.color2',
+    //   size: 'product.size2',
+    //   orderDate: 'product.orderDate2',
+    //   price: 'product.price2',
+    //   img: 'product.img2',
+    //   category: 'categoryList[i]2',}
+    ])
   }, [checked])
 
   // refresh
@@ -201,50 +123,59 @@ const List = () => {
     }
   }
 
-  // on submit
-  const onSubmit = async (event) => {
-    event.preventDefault()
+  // // on change
+  // const onChange = (event) => {
+  //   const { name, value } = event.target
+  //   setMail({ ...mail, [name]: value })
+  // }
 
-    isLoadingToggle(true)
+  // // on remove
+  // const onRemove = (mailId) => async () => {
+  //   let check = window.confirm('Are you sure you want to delete this mail?')
 
-    try {
-      const { data } = await save(mail)
+  //   if (check) {
+  //     try {
+  //       const { data } = await remove({ mailId })
 
-      if (data.success && data.data) {
-        setMail(mailEmpty)
+  //       if (data.success) {
+  //         await refresh()
+  //       }
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   }
+  // }
 
-        await refresh()
-      }
-    } catch (error) {
-      console.log(error)
-    } finally {
-      isLoadingToggle(false)
-    }
+  // on listSelect
+  const onListSelect = (mailData) => {
+  console.log("🚀 ~ file: index.js ~ line 257 ~ onListSelect ~ mailData", mailData)
+    // let check = window.confirm('Are you sure you want to delete this mail?')
+
+    setOnModal({
+      isOpen: true,
+      isLoading: false,
+      isError: false,
+      data: mailData,
+    })
+    // try {
+    //   const { data } = await listSelect({ mailData })
+
+    //   if (data.success) {
+    //     await refresh()
+    //   }
+    // } catch (error) {
+    //   console.log(error)
+    // }
   }
 
-  // on change
-  const onChange = (event) => {
-    const { name, value } = event.target
-    setMail({ ...mail, [name]: value })
+  const handleModalClose = () => {
+    setOnModal({
+      isOpen: false,
+      isLoading: false,
+      isError: false,
+      data: null,
+    })
   }
-
-  // on remove
-  const onRemove = (mailId) => async () => {
-    let check = window.confirm('Are you sure you want to delete this mail?')
-
-    if (check) {
-      try {
-        const { data } = await remove({ mailId })
-
-        if (data.success) {
-          await refresh()
-        }
-      } catch (error) {
-        console.log(error)
-      }
-    }
-  }
-
   // render
   return (
     <>
@@ -326,11 +257,12 @@ const List = () => {
             ) : (
               mails.map((mail, i) => {
                 return (
-                  <tr key={i}>
+                  <tr key={i} tabIndex={i + 1}
+                    aria-hidden="true" role="button" style={{ cursor: "pointer" }} onClick={() => onListSelect(mail)}>
                     <td>{i + 1}</td>
                     <td>{mail.brand}</td>
                     <td>{mail.productName}</td>
-                    <td>{mail.category}</td>
+                    {/* <td>{mail.category}</td> */}
                     <td>{mail.color}</td>
                     <td>{mail.size}</td>
                     <td>{moment(new Date(mail.orderDate)).format('yyyy/MM/DD')}</td>
@@ -344,6 +276,18 @@ const List = () => {
               })
             )}
           </table>
+          {/* <Pagination
+            // classes={{ root: '', ul: 'rounded-8 bg-white p-10' }}
+            // className="my-3"
+            sx={{}}
+            count={pageCount}
+            page={page}
+            siblingCount={1}
+            boundaryCount={1}
+            shape="rounded"
+            onChange={handleChange}
+            renderItem={(item) => <PaginationItem {...item} />}
+          /> */}
           {/* <div className='list'>
             {mails.length === 0 ? (
               <p>You have not added any mails.</p>
@@ -363,6 +307,8 @@ const List = () => {
           </div> */}
         </aside>
       </section>
+      {/* new MUI modal for mailData */}
+      <InventoryModal onModal={onModal} handleModalClose={handleModalClose} />
     </>
   )
 }
