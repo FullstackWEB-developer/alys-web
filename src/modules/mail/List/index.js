@@ -234,7 +234,7 @@ const List = () => {
               <th>#</th>
               <th>BRAND</th>
               <th>PRODUCT NAME</th>
-              <th>CATEGORY</th>
+              {/* <th>CATEGORY</th> */}
               <th>COLOUR</th>
               <th>SIZE</th>
               <th>DATE PURCHASED</th>
@@ -244,7 +244,7 @@ const List = () => {
             </tr>
             {(mails.length === 0 || isLoading) ? (
               <tr>
-                <td colSpan={10} style={{ textAlign: 'center' }}>
+                <td colSpan={9} style={{ textAlign: 'center' }}>
                   {isLoading ? (
                     <img
                       src={`${URL_WEB}/images/loader.gif`}
