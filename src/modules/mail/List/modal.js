@@ -12,7 +12,9 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { showMessage } from 'setup/messageSlice'
 import './style.css'
 
-import { Checkbox, Button, Alert, Modal, TextField } from '@mui/material'
+import { Checkbox, Button, Alert, Modal, TextField, TextareaAutosize } from '@mui/material'
+// import TextareaAutosize from '@mui/base/TextareaAutosize';
+
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -153,19 +155,6 @@ const InventoryModal = ({
               )}
             />
             <Controller
-              name='description'
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  sx={{ width: '200px', marginY: '20px' }}
-                  label='DESCRIPTION'
-                // placeholder='DESCRIPTION'
-                // onChange={(e) => onChange(e.target.value)}
-                />
-              )}
-            />
-            <Controller
               name='price'
               control={control}
               render={({ field }) => (
@@ -178,7 +167,7 @@ const InventoryModal = ({
                 />
               )}
             />
-            {/* <Controller
+            <Controller
               name='color'
               control={control}
               render={({ field }) => (
@@ -190,7 +179,34 @@ const InventoryModal = ({
                 // onChange={(e) => onChange(e.target.value)}
                 />
               )}
+            />
+            {/* <Controller
+              name='description'
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  sx={{ width: '200px', marginY: '20px' }}
+                  label='DESCRIPTION'
+                // placeholder='DESCRIPTION'
+                // onChange={(e) => onChange(e.target.value)}
+                />
+              )}
             /> */}
+            <Controller
+              name="description"
+              control={control}
+              // rules={{ required: 'You must enter a value' }}
+              render={({ field }) => (
+                <TextareaAutosize
+                  {...field}
+                  sx={{ width: '300px', marginY: '20px' }}
+                  // className="w-full h-156 border-2 rounded-8 p-12 border-grey-C7CD font-semibold"
+                  id="description"
+                  minRows={7}
+                />
+              )}
+            />
           </div>
         </DialogContent>
         <DialogActions className='justify-between p-4 pb-4'>
