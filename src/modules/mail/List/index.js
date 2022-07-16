@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import moment from 'moment'
 
-import { Pagination, PaginationItem } from '@mui/material';
+// import { Pagination, PaginationItem } from '@mui/material';
 
 // UI imports
 // import Button from 'ui/Button'
@@ -20,11 +20,6 @@ import { SET_CHECK, SET_INIT } from 'modules/mail/api/actions/types'
 import { list } from 'modules/mail/api/actions/query'
 import { save, remove } from 'modules/mail/api/actions/mutation'
 import { URL_WEB } from 'setup/config/env'
-
-// import { Checkbox, Button, Alert, Modal, TextField } from '@mui/material'
-// import CheckIcon from '@mui/icons-material/Check'
-// import styled from '@emotion/styled'
-// import { styled } from '@mui/system';
 
 const brands = [
     'zara',
@@ -43,8 +38,6 @@ const List = () => {
   // state
   const [isLoading, isLoadingToggle] = useState(false)
   const [mails, setMails] = useState([])
-  const mailEmpty = { text: '' }
-  const [mail, setMail] = useState(mailEmpty)
   // const [checked, setChecked] = useState([])
   const [onModal, setOnModal] = useState({
     isOpen: false,
@@ -54,12 +47,6 @@ const List = () => {
   })
   console.log("🚀 ~ file: index.js ~ line 165 ~ List ~ onModal", onModal)
   const checked = useSelector((state) => state.mail.check)
-  // console.log('🚀 ~ file: index.js ~ line 67 ~ List ~ checked', checked)
-
-  // const [page, setPage] = useState(1);
-  // const handleChange = (event, value) => {
-  //   setPage(value);
-  // };
 
   // on load
   useEffect(() => {
@@ -123,49 +110,14 @@ const List = () => {
     }
   }
 
-  // // on change
-  // const onChange = (event) => {
-  //   const { name, value } = event.target
-  //   setMail({ ...mail, [name]: value })
-  // }
-
-  // // on remove
-  // const onRemove = (mailId) => async () => {
-  //   let check = window.confirm('Are you sure you want to delete this mail?')
-
-  //   if (check) {
-  //     try {
-  //       const { data } = await remove({ mailId })
-
-  //       if (data.success) {
-  //         await refresh()
-  //       }
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-  // }
-
   // on listSelect
   const onListSelect = (mailData) => {
-  console.log("🚀 ~ file: index.js ~ line 257 ~ onListSelect ~ mailData", mailData)
-    // let check = window.confirm('Are you sure you want to delete this mail?')
-
     setOnModal({
       isOpen: true,
       isLoading: false,
       isError: false,
       data: mailData,
     })
-    // try {
-    //   const { data } = await listSelect({ mailData })
-
-    //   if (data.success) {
-    //     await refresh()
-    //   }
-    // } catch (error) {
-    //   console.log(error)
-    // }
   }
 
   const handleModalClose = () => {
@@ -288,23 +240,6 @@ const List = () => {
             onChange={handleChange}
             renderItem={(item) => <PaginationItem {...item} />}
           /> */}
-          {/* <div className='list'>
-            {mails.length === 0 ? (
-              <p>You have not added any mails.</p>
-            ) : (
-              mails.map((n) => (
-                <div className='item' key={n._id}>
-                  <p>{n.text}</p>
-
-                  <p className='info'>
-                    <em>{moment(n.createdAt).format(params.common.date)}</em>
-                    {' · '}
-                    <span onClick={onRemove(n._id)}>Delete</span>
-                  </p>
-                </div>
-              ))
-            )}
-          </div> */}
         </aside>
       </section>
       {/* new MUI modal for mailData */}

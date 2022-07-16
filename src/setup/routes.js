@@ -3,7 +3,8 @@ import PagesHome from 'modules/pages/Home'
 import PagesAuthorize from 'modules/pages/Authorize'
 import UserDashboard from 'modules/user/Dashboard'
 import UserProfile from 'modules/user/Profile'
-import NoteList from 'modules/note/List'
+// import NoteList from 'modules/note/List'
+import Marketplaces from 'modules/marketplace/List'
 import MailList from 'modules/mail/List'
 
 // Combined routes
@@ -35,6 +36,13 @@ const routes = {
     auth: true,
   },
 
+  // Marketplaces list
+  marketplaces: {
+    path: '/marketplaces',
+    component: Marketplaces,
+    auth: true,
+  },
+  
   // note list
   // noteList: {
   //   path: '/notes',

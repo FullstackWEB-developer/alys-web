@@ -97,3 +97,12 @@
   /* padding-top: 40px !important; */
   flex-direction: column;
 }
+
+.list-modal-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

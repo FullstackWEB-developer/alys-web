@@ -25,5 +25,5 @@ export const OAUTH_SPOTIFY_ID = process.env.REACT_APP_OAUTH_SPOTIFY_ID
 export const OAUTH_SHOPIFY_ID = process.env.REACT_APP_OAUTH_SHOPIFY_ID
 export const OAUTH_SHOPIFY_STORE = process.env.REACT_APP_OAUTH_SHOPIFY_STORE
 
-export const OAUTH_EBAY_ID = process.env.OAUTH_EBAY_ID
-export const OAUTH_EBAY_SECRET = process.env.OAUTH_EBAY_SECRET
+export const OAUTH_EBAY_ID = process.env.OAUTH_EBAY_ID || 'ALYS-alysmvp-SBX-4ee99cdfb-a6ab29ef'
+export const OAUTH_EBAY_SECRET = process.env.OAUTH_EBAY_SECRET || 'SBX-ee99cdfbd0ff-f47f-4efc-9fe6-97ce'
