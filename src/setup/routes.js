@@ -40,6 +40,7 @@ const routes = {
   marketplaces: {
     path: '/marketplaces',
     component: Marketplaces,
+    exact: true,
     auth: true,
   },
   

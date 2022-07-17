@@ -53,7 +53,6 @@ const postRequest = (data, ebayAuthToken) => {
   const encodedStr = base64Encode(`${ebayAuthToken.clientId}:${ebayAuthToken.clientSecret}`);
   const auth = `Basic ${encodedStr}`;
   return new Promise((resolve, reject) => {
-
     const response = axios({
       url: `https://${ebayAuthToken.baseUrl}/identity/v1/oauth2/token`,
       method: 'POST',
@@ -83,7 +82,6 @@ class EbayOauthToken {
     }
     // get user credentials.
     this.credentials = readOptions(options);
-    console.log("🚀 ~ file: ebay.js ~ line 96 ~ EbayOauthToken ~ constructor ~ this.credentials", this.credentials)
     this.grantType = '';
     return this;
   }
@@ -179,13 +177,13 @@ class EbayOauthToken {
 
 
 export const scopes = [
-    'https://api.ebay.com/oauth/api_scope',
-    'https://api.ebay.com/oauth/api_scope/sell.marketing.readonly',
-    'https://api.ebay.com/oauth/api_scope/sell.marketing',
-    'https://api.ebay.com/oauth/api_scope/sell.inventory.readonly',
-    'https://api.ebay.com/oauth/api_scope/sell.inventory',
-    'https://api.ebay.com/oauth/api_scope/sell.account.readonly',
-    'https://api.ebay.com/oauth/api_scope/sell.account',
+  'https://api.ebay.com/oauth/api_scope',
+  // 'https://api.ebay.com/oauth/api_scope/sell.marketing.readonly',
+  // 'https://api.ebay.com/oauth/api_scope/sell.marketing',
+  // 'https://api.ebay.com/oauth/api_scope/sell.inventory.readonly',
+  'https://api.ebay.com/oauth/api_scope/sell.inventory',
+  // 'https://api.ebay.com/oauth/api_scope/sell.account.readonly',
+  // 'https://api.ebay.com/oauth/api_scope/sell.account',
 ]
 export const ebayAuthToken = new EbayOauthToken({
   env: SANDBOX_ENV,
