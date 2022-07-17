@@ -339,7 +339,7 @@ const InventoryModal = ({
                       {...field}
                       labelId="condition-label"
                       id="condition"
-                      sx={{ width: '260px' }}
+                      sx={{ width: '290px' }}
                     // input={<BootstrapInput />}
                     // IconComponent={ExpandMoreRoundedIcon}
                     >
