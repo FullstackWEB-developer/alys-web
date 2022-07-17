@@ -43,8 +43,10 @@ const readOptions = (options) => {
 };
 
 const base64Encode = (encodeData) => {
-  const buff = new Buffer.from(encodeData); // eslint-disable-line 
-  return buff.toString('base64');
+  // const buff = new Buffer.from(encodeData); // eslint-disable-line 
+  const buff = window.btoa(encodeData);
+  // buff.toString('base64');
+  return buff;
 };
 
 const postRequest = (data, ebayAuthToken) => {
@@ -190,10 +192,11 @@ export const ebayAuthToken = new EbayOauthToken({
   clientId: OAUTH_EBAY_ID,
   clientSecret: OAUTH_EBAY_SECRET,
   redirectUri: 'ALYS-ALYS-alysmvp-SB-qhmxo',
-  state: 'ebay',
 });
 
-export const ebayAuthUrl = ebayAuthToken.generateUserAuthorizationUrl(SANDBOX_ENV, scopes);
+export const ebayAuthUrl = ebayAuthToken.generateUserAuthorizationUrl(SANDBOX_ENV, scopes, {
+  state: 'ebay',
+});
 
 // (async () => {
 //   const accessToken = await ebayAuthToken.exchangeCodeForAccessToken('PRODUCTION',  code);

@@ -15,7 +15,7 @@ import './style.css'
 //   setUserData,
 // } from 'modules/user/api/loginSlice'
 // import loginSetUserLocalStorage from 'modules/user/api/loginSetUserLocalStorage'
-// import { authorize } from 'modules/user/api/loginSlice'
+import { authorize } from 'modules/user/api/loginSlice'
 import routes from 'setup/routes'
 // import params from 'setup/config/params'
 // import { list } from 'modules/marketplace/api/actions/query'
@@ -29,11 +29,11 @@ const List = ({ history, location }) => {
   const dispatch = useDispatch()
   const ebay_refresh_token = window.localStorage.getItem('ebay_refresh_token')
 
-  const [isLoading, isLoadingToggle] = useState(false)
   const [tokens, setTokens] = useState([])
-  const [marketplaces, setMarketplaces] = useState([])
-  const marketplaceEmpty = { text: '' }
-  const [marketplace, setMarketplace] = useState(marketplaceEmpty)
+  // const [isLoading, isLoadingToggle] = useState(false)
+  // const [marketplaces, setMarketplaces] = useState([])
+  // const marketplaceEmpty = { text: '' }
+  // const [marketplace, setMarketplace] = useState(marketplaceEmpty)
   
   // const ebayAuthUrl = ebay.generateUserAuthorizationUrl('SANDBOX', scopes);
 
@@ -45,6 +45,7 @@ const List = ({ history, location }) => {
   // process
   const process = async () => {
     const query = queryString.parse(location.search)
+    console.log("🚀 ~ file: index.js ~ line 48 ~ process ~ query", query)
 
     if (query.code && query.state) {
       // let redirectTo = routes.pagesHome.path
@@ -72,31 +73,31 @@ const List = ({ history, location }) => {
   // render
   return (
     <>
-      <div class="container-m">
-        <h1 class="marketplace-title">
+      <div className="container-m">
+        <h1 className="marketplace-title">
           Pick a marketplace to connect
         </h1>
 
-        <div class="marketplace-list">
-          <div class="marketplaces-item">
-            <div class="left">
-              <img style={{ padding: "5px;" }} src="https://storage.googleapis.com/responsive-task-281907.appspot.com/static/dashboard/img/logo-ebay.ce13d60e3424.png" alt="ebay logo"/>
-                {ebay_refresh_token && <p class="label">Connected</p>}
+        <div className="marketplace-list">
+          <div className="marketplaces-item">
+            <div className="left">
+              <img style={{ padding: "5px" }} src="https://storage.googleapis.com/responsive-task-281907.appspot.com/static/dashboard/img/logo-ebay.ce13d60e3424.png" alt="ebay logo"/>
+                {ebay_refresh_token && <p className="label">Connected</p>}
             </div>
-            <div class="right">
-              {ebay_refresh_token ? <button onClick={() => localStorage.removeItem('ebay_refresh_token')} class="disconnect-btn">Disconnect</button>
-                : <a href={ebayAuthUrl}><button class="connect-btn">Connect</button></a>}
+            <div className="right">
+              {ebay_refresh_token ? <button onClick={() => localStorage.removeItem('ebay_refresh_token')} className="disconnect-btn">Disconnect</button>
+                : <a href={ebayAuthUrl}><button className="connect-btn">Connect</button></a>}
             </div>
 
           </div>
-          <div class="marketplaces-item">
-            <div class="left">
-              <img  style={{ padding: '5px;' }} src="https://storage.googleapis.com/responsive-task-281907.appspot.com/static/dashboard/img/logo-vinted.675911d5af2c.png" alt="" />
+          <div className="marketplaces-item">
+            <div className="left">
+              <img  style={{ padding: '5px' }} src="https://storage.googleapis.com/responsive-task-281907.appspot.com/static/dashboard/img/logo-vinted.675911d5af2c.png" alt="" />
             </div>
-            <div class="right">
-              {tokens.includes('ebay') ? <button class="disconnect-btn">Disconnect</button>
-                : <button class="connect-btn">Connect</button>}
-              {/* <span class="vinted-disabled-connect" data-tippy-content="To connect Vinted account, use Google Chrome with installed Zipsale extension." data-tippy-placement="left">
+            <div className="right">
+              {tokens.includes('ebay') ? <button className="disconnect-btn">Disconnect</button>
+                : <button className="connect-btn">Connect</button>}
+              {/* <span className="vinted-disabled-connect" data-tippy-content="To connect Vinted account, use Google Chrome with installed Zipsale extension." data-tippy-placement="left">
                 Connect
               </span> */}
             </div>
