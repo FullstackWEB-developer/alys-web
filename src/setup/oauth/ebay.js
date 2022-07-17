@@ -53,6 +53,7 @@ const postRequest = (data, ebayAuthToken) => {
   const encodedStr = base64Encode(`${ebayAuthToken.clientId}:${ebayAuthToken.clientSecret}`);
   const auth = `Basic ${encodedStr}`;
   return new Promise((resolve, reject) => {
+    // delete axios.defaults.headers.common['Authentication']
     const response = axios({
       url: `https://${ebayAuthToken.baseUrl}/identity/v1/oauth2/token`,
       method: 'POST',
@@ -60,7 +61,7 @@ const postRequest = (data, ebayAuthToken) => {
       headers: {
         'Content-Length': data.length,
         'Content-Type': 'application/x-www-form-urlencoded',
-        'authorization': auth
+        'Authorization': auth
       },
       // headers: {
       //   Authorization: `Bearer ${ebayToken}`,

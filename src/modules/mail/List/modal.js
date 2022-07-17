@@ -23,25 +23,25 @@ import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
 import axios from 'axios'
 
-  const defaultValues = {
-    SKU: null,
-    brand: '',
-    productName: '',
-    color: '',
-    size: '',
-    orderDate: '',
-    price: '',
-    img: '',
-    description: ''
-  }
+const defaultValues = {
+  SKU: '',
+  brand: '',
+  productName: '',
+  color: '',
+  size: '',
+  orderDate: '',
+  price: '',
+  img: '',
+  description: ''
+}
 
 const conditions = [
-  {name: 'New', value: 'NEW'},
-  {name: 'Link new', value: 'LIKE_NEW'},
+  { name: 'New', value: 'NEW' },
+  { name: 'Link new', value: 'LIKE_NEW' },
   // { name: 'New with defects', value: 'NEW_WITH_DEFECTS'},
-  { name: 'Used excellent', value: 'USED_EXCELLENT'},
+  { name: 'Used excellent', value: 'USED_EXCELLENT' },
   { name: 'Used good', value: 'USED_GOOD' },
-  { name: 'Used acceptable', value: 'USED_ACCEPTABLE'},
+  { name: 'Used acceptable', value: 'USED_ACCEPTABLE' },
 ]
 export function PoundNumberFormat(props) {
   const { inputRef, onChange, ...other } = props;
@@ -171,8 +171,9 @@ const InventoryModal = ({
       }
     }
     try {
+      // delete axios.defaults.headers.common['Authentication']
       const res = await axios({
-        url: `https://api.sandbox.ebay.com/sell/inventory/v1/inventory_item/${submitData?.SKU}`,
+        url: `https://api.sandbox.ebay.com/sell/inventory/v1/inventory_item/${submitData.SKU}`,
         method: 'put',
         data,
         headers: {
@@ -213,6 +214,9 @@ const InventoryModal = ({
               render={({ field }) => (
                 <TextField
                   {...field}
+          InputLabelProps={{
+            shrink: true,
+          }}
                   type='text'
                   sx={{ width: '200px', marginY: '20px' }}
                   label='BRAND'
@@ -226,6 +230,9 @@ const InventoryModal = ({
               render={({ field }) => (
                 <TextField
                   {...field}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   type='text'
                   sx={{ width: '100%', marginY: '20px' }}
                   label='Title'
@@ -233,6 +240,7 @@ const InventoryModal = ({
                 />
               )}
             />
+            <p style={{ marginBottom: '5px' }}>Description *</p>
             <Controller
               name="Description"
               control={control}
@@ -244,6 +252,7 @@ const InventoryModal = ({
                   // className="w-full h-156 border-2 rounded-8 p-12 border-grey-C7CD font-semibold"
                   id="description"
                   minRows={7}
+                  
                   required
                 />
               )}
@@ -252,11 +261,31 @@ const InventoryModal = ({
               <Controller
                 name='color'
                 control={control}
+                rules={{ required: 'You must enter a value' }}
                 render={({ field }) => (
                   <TextField
                     {...field}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                     sx={{ width: '130px' }}
                     label='Colour'
+                  />
+                )}
+              />
+              <Controller
+                name='quantity'
+                control={control}
+                rules={{ required: 'You must enter a value' }}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    type='number'
+                    sx={{ width: '130px' }}
+                    label='Quantity'
                   />
                 )}
               />
@@ -266,6 +295,9 @@ const InventoryModal = ({
                 render={({ field }) => (
                   <TextField
                     {...field}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                     sx={{ width: '130px' }}
                     label='SKU'
                   // placeholder='DESCRIPTION'
@@ -279,9 +311,14 @@ const InventoryModal = ({
               <Controller
                 name='price'
                 control={control}
+                rules={{ required: 'You must enter a value' }}
                 render={({ field }) => (
                   <TextField
                     {...field}
+
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                     sx={{ width: '130px' }}
                     label='Sale Price'
                     InputProps={{
@@ -292,30 +329,19 @@ const InventoryModal = ({
                 )}
               />
               <Controller
-                name='quantity'
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    type='number'
-                    sx={{ width: '130px' }}
-                    label='Quantity'
-                  />
-                )}
-              />
-              <Controller
                 name='condition'
                 control={control}
+                rules={{ required: 'You must enter a value' }}
                 render={({ field }) => (
                   <FormControl>
-                    <InputLabel id="condition-label">Condition</InputLabel>
+                    <InputLabel shrink={true} id="condition-label" sx={{backgroundColor: 'white'}}>Condition</InputLabel>
                     <Select
                       {...field}
                       labelId="condition-label"
                       id="condition"
-                      sx={{ width: '130px' }}
-                      // input={<BootstrapInput />}
-                      // IconComponent={ExpandMoreRoundedIcon}
+                      sx={{ width: '260px' }}
+                    // input={<BootstrapInput />}
+                    // IconComponent={ExpandMoreRoundedIcon}
                     >
                       {conditions.map((condition) => (
                         <MenuItem key={condition.value} value={condition.value}>
@@ -324,8 +350,8 @@ const InventoryModal = ({
                       ))}
                     </Select>
                   </FormControl>
-                  )}
-                />
+                )}
+              />
             </div>
           </div>
         </DialogContent>
