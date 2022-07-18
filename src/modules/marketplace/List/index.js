@@ -55,9 +55,9 @@ const List = ({ history, location }) => {
         // const data = await ebayAuthToken.exchangeCodeForAccessToken(OAUTH_EBAY_ENV, query.code);
         console.log("🚀 ~ file: index.js ~ line 56 ~ process ~ data", data)
 
-        if (data.refresh_token) {
+        if (data.data.refresh_token) {
 
-          localStorage.setItem('ebay_refresh_token', data.refresh_token)
+          localStorage.setItem('ebay_refresh_token', data.data.refresh_token)
 
           // redirectTo = routes.userDashboard.path
         }
