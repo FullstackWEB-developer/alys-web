@@ -134,6 +134,7 @@ class EbayOauthToken {
   generateUserAuthorizationUrl(environment, scopes, options) {
     validateParams(environment, scopes, this.credentials);
     const credentials = this.credentials[environment];
+    console.log("🚀 ~ file: ebay.js ~ line 137 ~ EbayOauthToken ~ generateUserAuthorizationUrl ~ credentials", credentials)
     if (!credentials) throw new Error('Error while reading the credentials, Kindly check here to configure');
     if (!credentials.redirectUri) throw new Error('redirect_uri is required for redirection after sign in \n kindly check here https://developer.ebay.com/api-docs/static/oauth-redirect-uri.html');
     if (options && typeof (options) !== 'object') throw new Error('Improper way to provide optional values');
@@ -210,6 +211,7 @@ export const ebayAuthToken = new EbayOauthToken({
   clientSecret: OAUTH_EBAY_SECRET,
   redirectUri: EBAY_RU_NAME,
 });
+  console.log("🚀 ~ file: ebay.js ~ line 213 ~ OAUTH_EBAY_ENV", OAUTH_EBAY_ENV)
 
 export const ebayAuthUrl = ebayAuthToken.generateUserAuthorizationUrl(OAUTH_EBAY_ENV, scopes, {
   state: 'ebay',
