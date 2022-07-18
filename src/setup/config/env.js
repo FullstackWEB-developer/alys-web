@@ -28,7 +28,7 @@ export const OAUTH_SHOPIFY_STORE = process.env.REACT_APP_OAUTH_SHOPIFY_STORE
 // export const OAUTH_EBAY_ID = process.env.OAUTH_EBAY_ID || 'ALYS-alysmvp-SBX-4ee99cdfb-a6ab29ef'
 // export const OAUTH_EBAY_SECRET = process.env.OAUTH_EBAY_SECRET || 'SBX-ee99cdfbd0ff-f47f-4efc-9fe6-97ce'
 
-export const OAUTH_EBAY_ENV = process.env.OAUTH_EBAY_ENV || 'SANDBOX' // SANDBOX or PRODUCTION
+export const OAUTH_EBAY_ENV = process.env.OAUTH_EBAY_ENV // || 'SANDBOX' // SANDBOX or PRODUCTION
 export const OAUTH_EBAY_ID = process.env.OAUTH_EBAY_ID || 'ALYS-alysmvp-PRD-4ee906e47-1dd7c0fd'
 export const OAUTH_EBAY_DEV_ID = process.env.OAUTH_EBAY_DEV_ID || '8340e499-5c62-4eea-a78f-3fc234412fa1'
 export const OAUTH_EBAY_SECRET = process.env.OAUTH_EBAY_SECRET || 'PRD-ee906e4701dd-b6f6-4c87-ba17-3a82'
