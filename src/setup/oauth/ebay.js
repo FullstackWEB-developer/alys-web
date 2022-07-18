@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { OAUTH_EBAY_ID, OAUTH_EBAY_SECRET, EBAY_RU_NAME, URL_WEB } from 'setup/config/env'
+import { OAUTH_EBAY_ENV, OAUTH_EBAY_ID, OAUTH_EBAY_SECRET, EBAY_RU_NAME, URL_WEB } from 'setup/config/env'
 import routes from 'setup/routes'
 
 // HTTP Header Constants
@@ -25,8 +25,8 @@ const OAUTHENVIRONMENT_APIENDPOINT_PRODUCTION = 'https://api.ebay.com/identity/v
 const CLIENT_CRED_SCOPE = 'https://api.ebay.com/oauth/api_scope';
 
 // Environments
-const PROD_ENV = 'PRODUCTION';
-const SANDBOX_ENV = 'SANDBOX';
+// const PROD_ENV = 'PRODUCTION';
+// const SANDBOX_ENV = 'SANDBOX';
 
 const validateParams = (environment, scopes, credentials) => {
   if (!environment) throw new Error('Kindly provide the environment - PRODUCTION/SANDBOX');
@@ -60,8 +60,10 @@ const postRequest = (data, ebayAuthToken) => {
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
       credentials: 'same-origin', // include, *same-origin, omit
       headers: {
-        'Content-Length': data.length,
-        'Content-Type': 'application/x-www-form-urlencoded',
+        // 'Content-Length': data.length,
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
         'Authorization': auth
       },
       // redirect: 'follow', // manual, *follow, error
@@ -203,13 +205,13 @@ export const scopes = [
   // 'https://api.ebay.com/oauth/api_scope/sell.account',
 ]
 export const ebayAuthToken = new EbayOauthToken({
-  env: SANDBOX_ENV,
+  env: OAUTH_EBAY_ENV,
   clientId: OAUTH_EBAY_ID,
   clientSecret: OAUTH_EBAY_SECRET,
   redirectUri: EBAY_RU_NAME,
 });
 
-export const ebayAuthUrl = ebayAuthToken.generateUserAuthorizationUrl(SANDBOX_ENV, scopes, {
+export const ebayAuthUrl = ebayAuthToken.generateUserAuthorizationUrl(OAUTH_EBAY_ENV, scopes, {
   state: 'ebay',
 });
 

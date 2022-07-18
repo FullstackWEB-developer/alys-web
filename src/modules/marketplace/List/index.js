@@ -35,7 +35,7 @@ const List = ({ history, location }) => {
   // const marketplaceEmpty = { text: '' }
   // const [marketplace, setMarketplace] = useState(marketplaceEmpty)
   
-  // const ebayAuthUrl = ebay.generateUserAuthorizationUrl('SANDBOX', scopes);
+  // const ebayAuthUrl = ebay.generateUserAuthorizationUrl(OAUTH_EBAY_ENV, scopes);
 
   // on load
   useEffect(() => {
@@ -51,8 +51,9 @@ const List = ({ history, location }) => {
       // let redirectTo = routes.pagesHome.path
 
       try {
-        // const { data } = await authorize(query)
-        const data = await ebayAuthToken.exchangeCodeForAccessToken('SANDBOX', query.code);
+        const { data } = await authorize({ ...query, type: 'refresh_token' })
+        // const data = await ebayAuthToken.exchangeCodeForAccessToken(OAUTH_EBAY_ENV, query.code);
+        console.log("🚀 ~ file: index.js ~ line 56 ~ process ~ data", data)
 
         if (data.refresh_token) {
 

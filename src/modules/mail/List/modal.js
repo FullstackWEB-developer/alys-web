@@ -5,13 +5,14 @@ import moment from 'moment'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import NumberFormat from 'react-number-format';
+import axios from 'axios'
 // import Ebay from 'ebay-node-api'
 
 // UI imports
 // import Button from 'ui/Button'
 // import Input from 'ui/Input'
 import { showMessage } from 'setup/messageSlice'
-import { ebayAuthToken, scopes } from 'setup/oauth/ebay'
+// import { ebayAuthToken, scopes } from 'setup/oauth/ebay'
 import './style.css'
 
 import { Checkbox, Button, Alert, Modal, TextField, TextareaAutosize, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
@@ -21,7 +22,9 @@ import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
-import axios from 'axios'
+
+import { authorize } from 'modules/user/api/loginSlice'
+// import { getAuthToken } from 'modules/marketplace/api/list'
 
 const defaultValues = {
   SKU: '',
@@ -116,7 +119,8 @@ const InventoryModal = ({
     const refresh_token = window.localStorage.getItem('ebay_refresh_token')
     if (refresh_token) {
       (async () => {
-        const newToken = await ebayAuthToken.getAccessToken('SANDBOX', refresh_token, scopes);
+        const newToken = await authorize({ code: refresh_token, state: 'ebay', type: 'access_token'})
+        // const newToken = await ebayAuthToken.getAccessToken(OAUTH_EBAY_ENV, refresh_token, scopes);
         localStorage.setItem('ebay_access_token', newToken.access_token);
       })();
     }
@@ -181,6 +185,7 @@ const InventoryModal = ({
           Authorization: `Bearer ${ebayToken}`,
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          'Content- Language': 'en- UK'
         },
       })
 

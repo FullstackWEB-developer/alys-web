@@ -18,3 +18,11 @@ export function marketplace(query) {
     params: query,
   })
 }
+
+// GetAuthToken
+export function getAuthToken(query) {
+  return axios.post(`${URL_API}/ebay/getAuthToken`, {
+    operation: 'userGetAuthToken',
+    params: query,
+  })
+}
