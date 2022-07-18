@@ -186,7 +186,7 @@ const InventoryModal = ({
           Authorization: `Bearer ${ebayToken}`,
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          'Content- Language': 'en- UK'
+          'Content-Language': 'en-UK'
         },
       })
 
