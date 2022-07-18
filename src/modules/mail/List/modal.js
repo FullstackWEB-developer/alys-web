@@ -172,8 +172,9 @@ const InventoryModal = ({
     }
     try {
       // delete axios.defaults.headers.common['Authentication']
+      const sku = encodeURIComponent(submitData.SKU);
       const res = await axios({
-        url: `https://api.sandbox.ebay.com/sell/inventory/v1/inventory_item/${submitData.SKU}`,
+        url: `https://api.sandbox.ebay.com/sell/inventory/v1/inventory_item/${sku}`,
         method: 'put',
         data,
         headers: {
@@ -244,7 +245,6 @@ const InventoryModal = ({
             <Controller
               name="Description"
               control={control}
-              // rules={{ required: 'You must enter a value' }}
               render={({ field }) => (
                 <TextareaAutosize
                   {...field}
@@ -261,7 +261,6 @@ const InventoryModal = ({
               <Controller
                 name='color'
                 control={control}
-                rules={{ required: 'You must enter a value' }}
                 render={({ field }) => (
                   <TextField
                     {...field}
@@ -276,7 +275,6 @@ const InventoryModal = ({
               <Controller
                 name='quantity'
                 control={control}
-                rules={{ required: 'You must enter a value' }}
                 render={({ field }) => (
                   <TextField
                     {...field}
@@ -286,6 +284,7 @@ const InventoryModal = ({
                     type='number'
                     sx={{ width: '130px' }}
                     label='Quantity'
+                    required
                   />
                 )}
               />
@@ -311,7 +310,6 @@ const InventoryModal = ({
               <Controller
                 name='price'
                 control={control}
-                rules={{ required: 'You must enter a value' }}
                 render={({ field }) => (
                   <TextField
                     {...field}
@@ -331,7 +329,6 @@ const InventoryModal = ({
               <Controller
                 name='condition'
                 control={control}
-                rules={{ required: 'You must enter a value' }}
                 render={({ field }) => (
                   <FormControl>
                     <InputLabel shrink={true} id="condition-label" sx={{backgroundColor: 'white'}}>Condition</InputLabel>
@@ -340,6 +337,7 @@ const InventoryModal = ({
                       labelId="condition-label"
                       id="condition"
                       sx={{ width: '290px' }}
+                      required
                     // input={<BootstrapInput />}
                     // IconComponent={ExpandMoreRoundedIcon}
                     >

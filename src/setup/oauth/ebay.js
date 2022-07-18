@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { OAUTH_EBAY_ID, OAUTH_EBAY_SECRET, URL_WEB } from 'setup/config/env'
+import { OAUTH_EBAY_ID, OAUTH_EBAY_SECRET, EBAY_RU_NAME, URL_WEB } from 'setup/config/env'
 import routes from 'setup/routes'
 
 // HTTP Header Constants
@@ -54,24 +54,40 @@ const postRequest = (data, ebayAuthToken) => {
   const auth = `Basic ${encodedStr}`;
   return new Promise((resolve, reject) => {
     // delete axios.defaults.headers.common['Authentication']
-    const response = axios({
-      url: `https://${ebayAuthToken.baseUrl}/identity/v1/oauth2/token`,
-      method: 'POST',
-      data,
+    const response = fetch(`https://${ebayAuthToken.baseUrl}/identity/v1/oauth2/token`, {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors', // no-cors, *cors, same-origin
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: 'same-origin', // include, *same-origin, omit
       headers: {
         'Content-Length': data.length,
         'Content-Type': 'application/x-www-form-urlencoded',
         'Authorization': auth
       },
-      // headers: {
-      //   Authorization: `Bearer ${ebayToken}`,
-      //   Accept: 'application/json',
-      //   'Content-Type': 'application/json',
-      // },
-    })
-    if (response.data.error) {
+      // redirect: 'follow', // manual, *follow, error
+      // referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify(data) // body data type must match "Content-Type" header
+    });
+    // const response = axios({
+    //   url: `https://${ebayAuthToken.baseUrl}/identity/v1/oauth2/token`,
+    //   method: 'POST',
+    //   data,
+    //   headers: {
+    //     'Content-Length': data.length,
+    //     'Content-Type': 'application/x-www-form-urlencoded',
+    //     'Authorization': auth
+    //   },
+    //   // headers: {
+    //   //   Authorization: `Bearer ${ebayToken}`,
+    //   //   Accept: 'application/json',
+    //   //   'Content-Type': 'application/json',
+    //   // },
+    // })
+    if (!response.ok) {
       reject(response.data);
     }
+    console.log("🚀 ~ file: ebay.js ~ line 87 ~ returnnewPromise ~ response", response)
+    console.log("🚀 ~ file: ebay ~ response.json()", response.json())
     resolve(response.data);
   });
 };
@@ -190,7 +206,7 @@ export const ebayAuthToken = new EbayOauthToken({
   env: SANDBOX_ENV,
   clientId: OAUTH_EBAY_ID,
   clientSecret: OAUTH_EBAY_SECRET,
-  redirectUri: 'ALYS-ALYS-alysmvp-SB-qhmxo',
+  redirectUri: EBAY_RU_NAME,
 });
 
 export const ebayAuthUrl = ebayAuthToken.generateUserAuthorizationUrl(SANDBOX_ENV, scopes, {
