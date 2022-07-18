@@ -75,16 +75,16 @@
 }
 .marketplace-list .marketplaces-item .connect-btn {
   margin: 5px;
-  background-color: #fff;
-  color: #1d190f;
+  color: #fff;
+  background-color: #fe4f15;
   border: 2px solid #e4e3df;
   transition: all .3s linear 0s;
   width: 105px;
   min-width: 105px;
 }
 .marketplace-list .marketplaces-item .disconnect-btn {
-  background-color: #fe4f15;
-  color: #fff;
+  color: #1d190f;
+  background-color: #fff;
   width: 105px;
   min-width: 105px;
 }

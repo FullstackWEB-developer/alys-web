@@ -120,8 +120,9 @@ const InventoryModal = ({
     if (refresh_token) {
       (async () => {
         const newToken = await authorize({ code: refresh_token, state: 'ebay', type: 'access_token'})
+        console.log("🚀 ~ file: modal.js ~ line 123 ~ newToken", newToken)
         // const newToken = await ebayAuthToken.getAccessToken(OAUTH_EBAY_ENV, refresh_token, scopes);
-        localStorage.setItem('ebay_access_token', newToken.access_token);
+        localStorage.setItem('ebay_access_token', newToken.data.data?.access_token);
       })();
     }
     return () =>
