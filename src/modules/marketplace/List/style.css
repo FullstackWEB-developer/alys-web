@@ -2,6 +2,8 @@
   width: 50%;
   min-width: 650px;
   margin: 0 auto;
+  position: relative;
+  height: 100%;
 }
 
 .marketplace-title {
@@ -77,13 +79,14 @@
   margin: 5px;
   color: #fff;
   background-color: #fe4f15;
-  border: 2px solid #e4e3df;
+  border: none;
   transition: all .3s linear 0s;
   width: 105px;
   min-width: 105px;
 }
 .marketplace-list .marketplaces-item .disconnect-btn {
   color: #1d190f;
+  border: 2px solid #e4e3df;
   background-color: #fff;
   width: 105px;
   min-width: 105px;
@@ -95,4 +98,16 @@
   font-size: 16px;
   line-height: 19px;
   color: #95938f
+}
+.loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, .5);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

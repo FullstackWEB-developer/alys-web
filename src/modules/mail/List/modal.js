@@ -25,6 +25,10 @@ import DialogContent from '@mui/material/DialogContent'
 
 import { authorize } from 'modules/user/api/loginSlice'
 // import { getAuthToken } from 'modules/marketplace/api/list'
+import { URL_API } from 'setup/config/env'
+import marketplaceSave from 'modules/marketplace/api/mutation/save'
+
+const user = JSON.parse(window.localStorage.getItem('user'))
 
 const defaultValues = {
   SKU: '',
@@ -115,16 +119,6 @@ const InventoryModal = ({
   // on load
   useEffect(() => {
     initData();
-
-    const refresh_token = window.localStorage.getItem('ebay_refresh_token')
-    if (refresh_token) {
-      (async () => {
-        const newToken = await authorize({ code: refresh_token, state: 'ebay', type: 'access_token'})
-        console.log("🚀 ~ file: modal.js ~ line 123 ~ newToken", newToken)
-        // const newToken = await ebayAuthToken.getAccessToken(OAUTH_EBAY_ENV, refresh_token, scopes);
-        localStorage.setItem('ebay_access_token', newToken.data.data?.access_token);
-      })();
-    }
     return () =>
       initData(
         reset({
@@ -138,7 +132,6 @@ const InventoryModal = ({
    */
   async function onSubmit(submitData) {
     console.log('🚀 ~ file: modal.js ~ line 40 ~ onSubmit ~ data', submitData)
-    const ebayToken = window.localStorage.getItem('ebay_access_token')
     // isLoadingToggle(true)
 
     const data = {
@@ -151,51 +144,44 @@ const InventoryModal = ({
       product: {
         title: submitData.productName,
         description: submitData.description,
-        // aspects: {
-        //   "size": [
-        //     "GoPro"
-        //   ],
-        //   "Type": [
-        //     "Helmet/Action"
-        //   ],
-        //   "Storage Type": [
-        //     "Removable"
-        //   ],
-        //   "Recording Definition": [
-        //     "High Definition"
-        //   ],
-        //   "Media Format": [
-        //     "Flash Drive (SSD)"
-        //   ],
-        //   "Optical Zoom": [
-        //     "10x"
-        //   ]
-        // },
+        aspects: {
+          "color": [
+            submitData.color
+          ],
+          // "Type": [
+          //   "Helmet/Action"
+          // ],
+          // "Storage Type": [
+          //   "Removable"
+          // ],
+          // "Recording Definition": [
+          //   "High Definition"
+          // ],
+          // "Media Format": [
+          //   "Flash Drive (SSD)"
+          // ],
+          // "Optical Zoom": [
+          //   "10x"
+          // ]
+        },
         brand: submitData.brand,
         imageUrls: [submitData.img],
       }
     }
     try {
-      // delete axios.defaults.headers.common['Authentication']
-      const sku = encodeURIComponent(submitData.SKU);
-      const res = await axios({
-        url: `https://api.sandbox.ebay.com/sell/inventory/v1/inventory_item/${sku}`,
-        method: 'put',
-        data,
-        headers: {
-          Authorization: `Bearer ${ebayToken}`,
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          'Content-Language': 'en-UK'
-        },
-      })
+      const res = await marketplaceSave({ sku: submitData.SKU, body: data })
 
-      if (res.status === 200) {
+      if (res.data.success) {
         dispatch(showMessage({
-          type: 'success',
-          message: 'Successfully updated',
+          variant: 'success',
+          message: res.data.message,
         }))
         handleModalClose()
+      } else {
+        dispatch(showMessage({
+          variant: 'error',
+          message: res.data.message,
+        }))
       }
     } catch (error) {
       dispatch(
@@ -249,7 +235,7 @@ const InventoryModal = ({
             />
             <p style={{ marginBottom: '5px' }}>Description *</p>
             <Controller
-              name="Description"
+              name="description"
               control={control}
               render={({ field }) => (
                 <TextareaAutosize
@@ -305,6 +291,7 @@ const InventoryModal = ({
                     }}
                     sx={{ width: '130px' }}
                     label='SKU'
+                    required
                   // placeholder='DESCRIPTION'
                   // onChange={(e) => onChange(e.target.value)}
                   />

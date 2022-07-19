@@ -17,8 +17,8 @@ import InventoryModal from './modal'
 // App imports
 import params from 'setup/config/params'
 import { SET_CHECK, SET_INIT } from 'modules/mail/api/actions/types'
-import { list } from 'modules/mail/api/actions/query'
-import { save, remove } from 'modules/mail/api/actions/mutation'
+// import { list } from 'modules/mail/api/actions/query'
+// import { save, remove } from 'modules/mail/api/actions/mutation'
 import { URL_WEB } from 'setup/config/env'
 
 const brands = [
@@ -50,7 +50,7 @@ const List = () => {
 
   // on load
   useEffect(() => {
-    refresh()
+    // refresh()
     return () => dispatch({ type: SET_INIT })
   }, [])
 
@@ -78,37 +78,37 @@ const List = () => {
     ])
   }, [checked])
 
-  // refresh
-  const refresh = async () => {
-    isLoadingToggle(true)
+  // // refresh
+  // const refresh = async () => {
+  //   isLoadingToggle(true)
 
-    try {
-      const { data } = await list()
+  //   try {
+  //     const { data } = await list()
 
-      if (data.success && data.data) {
-        setMails(data.data)
-      } else {
-        setMails([])
-        dispatch(
-          showMessage({
-            message: `There is no Order!`,
-            variant: 'error',
-          })
-        );
-      }
-    } catch (error) {
-      console.log(error)
-      dispatch(
-        showMessage({
-          message: error.message,
-          autoHideDuration: 2000,
-          variant: 'error',
-        })
-      );
-    } finally {
-      isLoadingToggle(false)
-    }
-  }
+  //     if (data.success && data.data) {
+  //       setMails(data.data)
+  //     } else {
+  //       setMails([])
+  //       dispatch(
+  //         showMessage({
+  //           message: `There is no Order!`,
+  //           variant: 'error',
+  //         })
+  //       );
+  //     }
+  //   } catch (error) {
+  //     console.log(error)
+  //     dispatch(
+  //       showMessage({
+  //         message: error.message,
+  //         autoHideDuration: 2000,
+  //         variant: 'error',
+  //       })
+  //     );
+  //   } finally {
+  //     isLoadingToggle(false)
+  //   }
+  // }
 
   // on listSelect
   const onListSelect = (mailData) => {
