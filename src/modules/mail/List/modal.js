@@ -44,7 +44,7 @@ const defaultValues = {
 
 const conditions = [
   { name: 'New', value: 'NEW' },
-  { name: 'Link new', value: 'LIKE_NEW' },
+  { name: 'Like new', value: 'LIKE_NEW' },
   // { name: 'New with defects', value: 'NEW_WITH_DEFECTS'},
   { name: 'Used excellent', value: 'USED_EXCELLENT' },
   { name: 'Used good', value: 'USED_GOOD' },
