@@ -15,15 +15,16 @@ import './style.css'
 //   setUserData,
 // } from 'modules/user/api/loginSlice'
 // import loginSetUserLocalStorage from 'modules/user/api/loginSetUserLocalStorage'
+import { CircularProgress } from '@mui/material'
 import { authorize } from 'modules/user/api/loginSlice'
 import { showMessage } from 'setup/messageSlice';
-import routes from 'setup/routes'
+// import routes from 'setup/routes'
 // import params from 'setup/config/params'
 import { list } from 'modules/marketplace/api/query'
 // import { save, remove } from 'modules/marketplace/api/mutation'
-import { URL_WEB } from 'setup/config/env'
+// import { URL_WEB } from 'setup/config/env'
 import { ebayAuthToken, ebayAuthUrl } from 'setup/oauth/ebay'
-import { CircularProgress } from '@mui/material'
+import marketplaceRemove from 'modules/marketplace/api/mutation/remove'
 
 // Component
 const List = ({ history, location }) => {
@@ -85,6 +86,17 @@ const List = ({ history, location }) => {
     }
   }
 
+  const handleDisconnect = async (data) => {
+    // isLoadingToggle(true)
+    const res = await marketplaceRemove(data)
+    if (res.data.success) {
+      if (data.type === 'ebay') {
+        setTokens({ ...tokens, ebay_refresh_token: '' })
+      } else if (data.type === 'vinted') {
+        setTokens({ ...tokens, vinted_refresh_token: '' })
+      }
+    }
+  }
   // render
   return (
     <div className="container-m">
@@ -105,7 +117,7 @@ const List = ({ history, location }) => {
                 {tokens.ebay_refresh_token && <p className="label">Connected</p>}
               </div>
               <div className="right">
-                {tokens.ebay_refresh_token ? <button onClick={() => localStorage.removeItem('ebay_refresh_token')} className="disconnect-btn">Disconnect</button>
+                  {tokens.ebay_refresh_token ? <button onClick={() => handleDisconnect({type:'ebay'})} className="disconnect-btn">Disconnect</button>
                   : <a href={ebayAuthUrl}><button className="connect-btn">Connect</button></a>}
               </div>
 
@@ -116,7 +128,7 @@ const List = ({ history, location }) => {
                 {tokens.vinted_refresh_token && <p className="label">Connected</p>}
               </div>
               <div className="right">
-                {tokens.vinted_refresh_token ? <button className="disconnect-btn">Disconnect</button>
+                  {tokens.vinted_refresh_token ? <button onClick={() => handleDisconnect({type:'vinted'})} className="disconnect-btn">Disconnect</button>
                   : <button className="connect-btn">Connect</button>}
               </div>
             </div>

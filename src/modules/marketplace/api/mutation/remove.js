@@ -5,9 +5,9 @@ import axios from 'axios'
 import { URL_API } from 'setup/config/env'
 
 // Remove
-export default function remove({ noteId }) {
+export default function remove({ type }) {
   return axios.post(URL_API, {
-    operation: 'noteRemove',
-    params: { noteId },
+    operation: 'marketplaceRemove',
+    params: { type },
   })
 }
