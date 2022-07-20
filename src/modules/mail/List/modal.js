@@ -173,12 +173,13 @@ const InventoryModal = ({
       // categoryId: '30120',
       // listingDescription:
       //   'Lumia phone with a stunning 5.7 inch Quad HD display and a powerful octa-core processor.',
-      listingPolicies: {
-        fulfillmentPolicyId: '<fulfillmentPolicyId>',
-        paymentPolicyId: '<paymentPolicyId>',
-        returnPolicyId: '<returnPolicyId>',
-      },
-      merchantLocationKey: 'string',
+
+      // listingPolicies: {
+      //   fulfillmentPolicyId: '<fulfillmentPolicyId>',
+      //   paymentPolicyId: '<paymentPolicyId>',
+      //   returnPolicyId: '<returnPolicyId>',
+      // },
+      // merchantLocationKey: 'string',
       pricingSummary: {
         price: {
           currency: 'GBP',
@@ -207,7 +208,7 @@ const InventoryModal = ({
       dispatch(
         showMessage({
           message: error.message,
-          autoHideDuration: 2000,
+          autoHideDuration: 3000,
           variant: 'error',
         })
       );

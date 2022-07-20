@@ -63,6 +63,14 @@ const List = ({ history, location }) => {
           isLoadingToggle(false)
         }
       } catch (error) {
+        isLoadingToggle(false)
+        dispatch(
+          showMessage({
+            message: error.message,
+            autoHideDuration: 3000,
+            variant: 'error',
+          })
+        );
         console.error(error)
       }
     } else {
