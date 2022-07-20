@@ -72,16 +72,6 @@ const List = ({ history, location }) => {
         isLoadingToggle(false)
         // const ebay = Object.entries(res.data.data).find(([key]) => key.includes('ebay'))[1];
         // const vinted = Object.fromEntries(Object.entries(res.data.data).filter(([key]) => key.includes('vinted')));
-        dispatch(showMessage({
-          variant: 'success',
-          message: res.data.message,
-        }))
-      } else {
-        dispatch(showMessage({
-          message: res.data.message,
-          autoHideDuration: 2000,
-          variant: 'error',
-        }));
       }
     }
   }
