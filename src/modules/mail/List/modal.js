@@ -134,7 +134,7 @@ const InventoryModal = ({
     console.log('🚀 ~ file: modal.js ~ line 40 ~ onSubmit ~ data', submitData)
     // isLoadingToggle(true)
 
-    const data = {
+    const SellInventoryItem = {
       availability: {
         shipToLocationAvailability: {
           quantity: submitData.quantity,
@@ -168,8 +168,28 @@ const InventoryModal = ({
         imageUrls: [submitData.img],
       }
     }
+    const EbayOfferDetailsWithId = {
+      // availableQuantity: 75,
+      // categoryId: '30120',
+      // listingDescription:
+      //   'Lumia phone with a stunning 5.7 inch Quad HD display and a powerful octa-core processor.',
+      listingPolicies: {
+        fulfillmentPolicyId: '<fulfillmentPolicyId>',
+        paymentPolicyId: '<paymentPolicyId>',
+        returnPolicyId: '<returnPolicyId>',
+      },
+      merchantLocationKey: 'string',
+      pricingSummary: {
+        price: {
+          currency: 'GBP',
+          value: submitData.price,
+        },
+      },
+        // quantityLimitPerBuyer: 2,
+        // includeCatalogProductDetails: true,
+    };
     try {
-      const res = await marketplaceSave({ sku: submitData.SKU, body: data })
+      const res = await marketplaceSave({ sku: submitData.SKU, body: { SellInventoryItem, EbayOfferDetailsWithId } })
 
       if (res.data.success) {
         dispatch(showMessage({
