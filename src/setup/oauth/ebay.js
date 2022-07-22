@@ -205,8 +205,8 @@ export const scopes = [
   'https://api.ebay.com/oauth/api_scope/sell.account',
   // 'https://api.ebay.com/oauth/api_scope/sell.account.readonly',
   'https://api.ebay.com/oauth/api_scope/sell.fulfillment',
-  'https://api.ebay.com/oauth/api_scope/commerce.catalog.readonly',
-  'https://api.ebay.com/oauth/api_scope/sell.finances',
+  // 'https://api.ebay.com/oauth/api_scope/commerce.catalog.readonly',
+  // 'https://api.ebay.com/oauth/api_scope/sell.finances',
   'https://api.ebay.com/oauth/api_scope/sell.item',
 ]
 export const ebayAuthToken = new EbayOauthToken({
