@@ -14,7 +14,7 @@ const PAYLOAD_REFRESH_TOKEN = 'refresh_token';
 const PAYLOAD_STATE = 'state';
 
 // Web End point
-const OAUTHENVIRONMENT_WEBENDPOINT_PRODUCTION = 'https://auth.ebay.com/oauth2/authorize';
+const OAUTHENVIRONMENT_WEBENDPOINT_PRODUCTION = 'https://auth.ebay.co.uk/oauth2/authorize';
 const OAUTHENVIRONMENT_WEBENDPOINT_SANDBOX = 'https://auth.sandbox.ebay.com/oauth2/authorize';
 
 // API End Point
