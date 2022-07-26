@@ -14,7 +14,7 @@ const PAYLOAD_REFRESH_TOKEN = 'refresh_token';
 const PAYLOAD_STATE = 'state';
 
 // Web End point
-const OAUTHENVIRONMENT_WEBENDPOINT_PRODUCTION = 'https://auth.ebay.co.uk/oauth2/authorize';
+const OAUTHENVIRONMENT_WEBENDPOINT_PRODUCTION = 'https://auth.ebay.com/oauth2/authorize';
 const OAUTHENVIRONMENT_WEBENDPOINT_SANDBOX = 'https://auth.sandbox.ebay.com/oauth2/authorize';
 
 // API End Point
@@ -198,15 +198,15 @@ class EbayOauthToken {
 
 export const scopes = [
   'https://api.ebay.com/oauth/api_scope',
-  // 'https://api.ebay.com/oauth/api_scope/sell.marketing.readonly',
-  // 'https://api.ebay.com/oauth/api_scope/sell.marketing',
+  'https://api.ebay.com/oauth/api_scope/sell.marketing.readonly',
+  'https://api.ebay.com/oauth/api_scope/sell.marketing',
   'https://api.ebay.com/oauth/api_scope/sell.inventory',
-  // 'https://api.ebay.com/oauth/api_scope/sell.inventory.readonly',
+  'https://api.ebay.com/oauth/api_scope/sell.inventory.readonly',
   'https://api.ebay.com/oauth/api_scope/sell.account',
-  // 'https://api.ebay.com/oauth/api_scope/sell.account.readonly',
+  'https://api.ebay.com/oauth/api_scope/sell.account.readonly',
   'https://api.ebay.com/oauth/api_scope/sell.fulfillment',
-  // 'https://api.ebay.com/oauth/api_scope/commerce.catalog.readonly',
-  // 'https://api.ebay.com/oauth/api_scope/sell.finances',
+  'https://api.ebay.com/oauth/api_scope/commerce.catalog.readonly',
+  'https://api.ebay.com/oauth/api_scope/sell.finances',
   'https://api.ebay.com/oauth/api_scope/sell.item',
 ]
 export const ebayAuthToken = new EbayOauthToken({

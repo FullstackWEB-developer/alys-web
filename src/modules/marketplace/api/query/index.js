@@ -1,5 +1,5 @@
 // App Imports
-import list from './list'
+import list, { marketplaceCategory } from './list'
 
 // Queries
-export { list }
+export { list, marketplaceCategory }

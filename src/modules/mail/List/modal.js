@@ -76,11 +76,11 @@ export function PoundNumberFormat(props) {
   );
 }
 
-const InventoryModal = ({
+export default function InventoryModal({
   onModal,
   // setOnModal,
   handleModalClose,
-}) => {
+}) {
   const dispatch = useDispatch()
   // const [change, setChange] = useState('')
 
@@ -270,6 +270,9 @@ const InventoryModal = ({
                 />
               )}
             />
+            {/* TODO: category */}
+
+
             <div className='list-modal-row'>
               <Controller
                 name='color'
@@ -389,5 +392,3 @@ const InventoryModal = ({
     </Dialog>
   )
 }
-
-export default InventoryModal

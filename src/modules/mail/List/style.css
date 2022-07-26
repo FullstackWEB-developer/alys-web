@@ -1,3 +1,6 @@
+@import url(./select.css);
+/* @import 'select.css'; */
+
 .mail-list {
   display: flex;
   flex-direction: column;

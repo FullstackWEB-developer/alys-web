@@ -25,3 +25,11 @@ export default function list() {
   //   return []
   // }
 }
+
+// Marketplace
+export function marketplaceCategory(query) {
+  return axios.post(URL_API, {
+    operation: 'marketplaceCategory',
+    query,
+  })
+}
