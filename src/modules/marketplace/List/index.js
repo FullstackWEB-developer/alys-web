@@ -23,7 +23,7 @@ import { showMessage } from 'setup/messageSlice';
 import { list } from 'modules/marketplace/api/query'
 // import { save, remove } from 'modules/marketplace/api/mutation'
 // import { URL_WEB } from 'setup/config/env'
-// import { ebayAuthUrl } from 'setup/oauth/ebay'
+import { ebayAuthUrl } from 'setup/oauth/ebay'
 import marketplaceRemove from 'modules/marketplace/api/mutation/remove'
 
 // Component
@@ -39,7 +39,7 @@ const List = ({ history, location }) => {
   // const marketplaceEmpty = { text: '' }
   // const [marketplace, setMarketplace] = useState(marketplaceEmpty)
 
-  const ebayAuthUrl = 'https://auth.ebay.com/oauth2/authorize?client_id=ALYS-alysmvp-PRD-4ee906e47-1dd7c0fd&response_type=code&redirect_uri=ALYS-ALYS-alysmvp-PR-remwqbrnv&scope=https://api.ebay.com/oauth/api_scope https://api.ebay.com/oauth/api_scope/sell.marketing.readonly https://api.ebay.com/oauth/api_scope/sell.marketing https://api.ebay.com/oauth/api_scope/sell.inventory.readonly https://api.ebay.com/oauth/api_scope/sell.inventory https://api.ebay.com/oauth/api_scope/sell.account.readonly https://api.ebay.com/oauth/api_scope/sell.account https://api.ebay.com/oauth/api_scope/sell.fulfillment.readonly https://api.ebay.com/oauth/api_scope/sell.fulfillment https://api.ebay.com/oauth/api_scope/sell.analytics.readonly https://api.ebay.com/oauth/api_scope/sell.finances https://api.ebay.com/oauth/api_scope/sell.payment.dispute https://api.ebay.com/oauth/api_scope/commerce.identity.readonly https://api.ebay.com/oauth/api_scope/commerce.notification.subscription https://api.ebay.com/oauth/api_scope/commerce.notification.subscription.readonly https://api.ebay.com/oauth/api_scope/commerce.catalog.readonly https://api.ebay.com/oauth/api_scope/sell.item&state=ebay';
+  // const ebayAuthUrl = 'https://auth.ebay.com/oauth2/authorize?client_id=ALYS-alysmvp-PRD-4ee906e47-1dd7c0fd&response_type=code&redirect_uri=ALYS-ALYS-alysmvp-PR-remwqbrnv&scope=https://api.ebay.com/oauth/api_scope https://api.ebay.com/oauth/api_scope/sell.marketing.readonly https://api.ebay.com/oauth/api_scope/sell.marketing https://api.ebay.com/oauth/api_scope/sell.inventory.readonly https://api.ebay.com/oauth/api_scope/sell.inventory https://api.ebay.com/oauth/api_scope/sell.account.readonly https://api.ebay.com/oauth/api_scope/sell.account https://api.ebay.com/oauth/api_scope/sell.fulfillment.readonly https://api.ebay.com/oauth/api_scope/sell.fulfillment https://api.ebay.com/oauth/api_scope/sell.analytics.readonly https://api.ebay.com/oauth/api_scope/sell.finances https://api.ebay.com/oauth/api_scope/sell.payment.dispute https://api.ebay.com/oauth/api_scope/commerce.identity.readonly https://api.ebay.com/oauth/api_scope/commerce.notification.subscription https://api.ebay.com/oauth/api_scope/commerce.notification.subscription.readonly&state=ebay';
 
   // on load
   useEffect(() => {
