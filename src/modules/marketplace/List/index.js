@@ -17,7 +17,7 @@ import './style.css'
 // import loginSetUserLocalStorage from 'modules/user/api/loginSetUserLocalStorage'
 import { CircularProgress } from '@mui/material'
 import { authorize } from 'modules/user/api/loginSlice'
-import { showMessage } from 'setup/messageSlice';
+import { showMessage } from 'setup/messageSlice'
 // import routes from 'setup/routes'
 // import params from 'setup/config/params'
 import { list } from 'modules/marketplace/api/query'
@@ -30,7 +30,7 @@ import marketplaceRemove from 'modules/marketplace/api/mutation/remove'
 const List = ({ history, location }) => {
   // state
   const dispatch = useDispatch()
-  // const ebay_refresh_token = window.localStorage.getItem('ebay_refresh_token')
+  // const ebay_tokens = window.localStorage.getItem('ebay_tokens')
   const user = JSON.parse(window.localStorage.getItem('user'))
 
   const [tokens, setTokens] = useState([])
@@ -41,6 +41,9 @@ const List = ({ history, location }) => {
 
   // const ebayAuthUrl = 'https://auth.ebay.com/oauth2/authorize?client_id=ALYS-alysmvp-PRD-4ee906e47-1dd7c0fd&response_type=code&redirect_uri=ALYS-ALYS-alysmvp-PR-remwqbrnv&scope=https://api.ebay.com/oauth/api_scope https://api.ebay.com/oauth/api_scope/sell.marketing.readonly https://api.ebay.com/oauth/api_scope/sell.marketing https://api.ebay.com/oauth/api_scope/sell.inventory.readonly https://api.ebay.com/oauth/api_scope/sell.inventory https://api.ebay.com/oauth/api_scope/sell.account.readonly https://api.ebay.com/oauth/api_scope/sell.account https://api.ebay.com/oauth/api_scope/sell.fulfillment.readonly https://api.ebay.com/oauth/api_scope/sell.fulfillment https://api.ebay.com/oauth/api_scope/sell.analytics.readonly https://api.ebay.com/oauth/api_scope/sell.finances https://api.ebay.com/oauth/api_scope/sell.payment.dispute https://api.ebay.com/oauth/api_scope/commerce.identity.readonly https://api.ebay.com/oauth/api_scope/commerce.notification.subscription https://api.ebay.com/oauth/api_scope/commerce.notification.subscription.readonly&state=ebay';
 
+  // const ebayAuthUrl = 'https://auth.ebay.com/oauth2/authorize?client_id=ALYS-alysmvp-PRD-4ee906e47-1dd7c0fd&redirect_uri=ALYS-ALYS-alysmvp-PR-remwqbrnv&response_type=code&scope=https://api.ebay.com/oauth/api_scope https://api.ebay.com/oauth/api_scope/sell.marketing.readonly https://api.ebay.com/oauth/api_scope/sell.marketing https://api.ebay.com/oauth/api_scope/sell.inventory.readonly https://api.ebay.com/oauth/api_scope/sell.inventory https://api.ebay.com/oauth/api_scope/sell.account.readonly https://api.ebay.com/oauth/api_scope/sell.account https://api.ebay.com/oauth/api_scope/sell.fulfillment.readonly https://api.ebay.com/oauth/api_scope/sell.fulfillment https://api.ebay.com/oauth/api_scope/sell.analytics.readonly https://api.ebay.com/oauth/api_scope/sell.finances https://api.ebay.com/oauth/api_scope/sell.payment.dispute https://api.ebay.com/oauth/api_scope/commerce.identity.readonly https://api.ebay.com/oauth/api_scope/commerce.notification.subscription https://api.ebay.com/oauth/api_scope/commerce.notification.subscription.readonly&state=ebay'
+
+  // const ebayAuthUrl = 'https://auth.ebay.com/oauth2/authorize?client_id=ALYS-alysmvp-PRD-4ee906e47-1dd7c0fd&response_type=code&redirect_uri=ALYS-ALYS-alysmvp-PR-remwqbrnv&scope=https://api.ebay.com/oauth/api_scope https://api.ebay.com/oauth/api_scope/sell.marketing.readonly https://api.ebay.com/oauth/api_scope/sell.marketing https://api.ebay.com/oauth/api_scope/sell.inventory.readonly https://api.ebay.com/oauth/api_scope/sell.inventory https://api.ebay.com/oauth/api_scope/sell.account.readonly https://api.ebay.com/oauth/api_scope/sell.account https://api.ebay.com/oauth/api_scope/sell.fulfillment.readonly https://api.ebay.com/oauth/api_scope/sell.fulfillment https://api.ebay.com/oauth/api_scope/sell.analytics.readonly https://api.ebay.com/oauth/api_scope/sell.finances https://api.ebay.com/oauth/api_scope/sell.payment.dispute https://api.ebay.com/oauth/api_scope/commerce.identity.readonly https://api.ebay.com/oauth/api_scope/commerce.notification.subscription https://api.ebay.com/oauth/api_scope/commerce.notification.subscription.readonly&state=ebay'
   // on load
   useEffect(() => {
     process()
@@ -50,16 +53,16 @@ const List = ({ history, location }) => {
   const process = async () => {
     isLoadingToggle(true)
     const query = queryString.parse(location.search)
-    console.log("🚀 ~ file: index.js ~ line 48 ~ process ~ query", query)
+    console.log('🚀 ~ file: index.js ~ line 48 ~ process ~ query', query)
 
     if (query.code && query.state) {
       try {
         const { data } = await authorize({ ...query, user: user.email })
         // const data = await ebayAuthToken.exchangeCodeForAccessToken(OAUTH_EBAY_ENV, query.code);
-        console.log("🚀 ~ file: index.js ~ line 56 ~ process ~ data", data)
+        console.log('🚀 ~ file: index.js ~ line 56 ~ process ~ data', data)
 
         if (data.data?.refresh_token) {
-          setTokens({ ...tokens, ebay_refresh_token: data.data.refresh_token })
+          setTokens({ ...tokens, ebay_tokens: data.data.refresh_token })
           isLoadingToggle(false)
         }
       } catch (error) {
@@ -69,8 +72,8 @@ const List = ({ history, location }) => {
             message: error.message,
             autoHideDuration: 3000,
             variant: 'error',
-          })
-        );
+          }),
+        )
         console.error(error)
       }
     } else {
@@ -89,50 +92,73 @@ const List = ({ history, location }) => {
     const res = await marketplaceRemove(data)
     if (res.data.success) {
       if (data.type === 'ebay') {
-        setTokens({ ...tokens, ebay_refresh_token: '' })
+        setTokens({ ...tokens, ebay_tokens: '' })
       } else if (data.type === 'vinted') {
-        setTokens({ ...tokens, vinted_refresh_token: '' })
+        setTokens({ ...tokens, vinted_tokens: '' })
       }
     }
   }
   // render
   return (
-    <div className="container-m">
-      {(isLoading) ? (
-        <div className="loading">
+    <div className='container-m'>
+      {isLoading ? (
+        <div className='loading'>
           <CircularProgress />
         </div>
       ) : (
         <>
-          <h1 className="marketplace-title">
-            Pick a marketplace to connect
-          </h1>
+          <h1 className='marketplace-title'>Pick a marketplace to connect</h1>
 
-          <div className="marketplace-list">
-            <div className="marketplaces-item">
-              <div className="left">
-                <img style={{ padding: "5px" }} src="https://storage.googleapis.com/responsive-task-281907.appspot.com/static/dashboard/img/logo-ebay.ce13d60e3424.png" alt="ebay logo" />
-                {tokens.ebay_refresh_token && <p className="label">Connected</p>}
+          <div className='marketplace-list'>
+            <div className='marketplaces-item'>
+              <div className='left'>
+                <img
+                  style={{ padding: '5px' }}
+                  src='https://storage.googleapis.com/responsive-task-281907.appspot.com/static/dashboard/img/logo-ebay.ce13d60e3424.png'
+                  alt='ebay logo'
+                />
+                {tokens.ebay_tokens && <p className='label'>Connected</p>}
               </div>
-              <div className="right">
-                  {tokens.ebay_refresh_token ? <button onClick={() => handleDisconnect({type:'ebay'})} className="disconnect-btn">Disconnect</button>
-                  : <a href={ebayAuthUrl}><button className="connect-btn">Connect</button></a>}
+              <div className='right'>
+                {tokens.ebay_tokens ? (
+                  <button
+                    onClick={() => handleDisconnect({ type: 'ebay' })}
+                    className='disconnect-btn'
+                  >
+                    Disconnect
+                  </button>
+                ) : (
+                  <a href={ebayAuthUrl}>
+                    <button className='connect-btn'>Connect</button>
+                  </a>
+                )}
               </div>
-
             </div>
-            <div className="marketplaces-item">
-              <div className="left">
-                <img style={{ padding: '5px' }} src="https://storage.googleapis.com/responsive-task-281907.appspot.com/static/dashboard/img/logo-vinted.675911d5af2c.png" alt="" />
-                {tokens.vinted_refresh_token && <p className="label">Connected</p>}
+            <div className='marketplaces-item'>
+              <div className='left'>
+                <img
+                  style={{ padding: '5px' }}
+                  src='https://storage.googleapis.com/responsive-task-281907.appspot.com/static/dashboard/img/logo-vinted.675911d5af2c.png'
+                  alt=''
+                />
+                {tokens.vinted_tokens && <p className='label'>Connected</p>}
               </div>
-              <div className="right">
-                  {tokens.vinted_refresh_token ? <button onClick={() => handleDisconnect({type:'vinted'})} className="disconnect-btn">Disconnect</button>
-                  : <button className="connect-btn">Connect</button>}
+              <div className='right'>
+                {tokens.vinted_tokens ? (
+                  <button
+                    onClick={() => handleDisconnect({ type: 'vinted' })}
+                    className='disconnect-btn'
+                  >
+                    Disconnect
+                  </button>
+                ) : (
+                  <button className='connect-btn'>Connect</button>
+                )}
               </div>
             </div>
-
           </div>
-        </>)}
+        </>
+      )}
     </div>
   )
 }

@@ -27,9 +27,9 @@ export default function list() {
 }
 
 // Marketplace
-export function marketplaceCategory(query) {
+export function marketplaceCategory(params) {
   return axios.post(URL_API, {
     operation: 'marketplaceCategory',
-    query,
+    params,
   })
 }

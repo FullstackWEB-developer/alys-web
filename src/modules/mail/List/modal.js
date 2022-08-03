@@ -17,6 +17,7 @@ import './style.css'
 
 import { Checkbox, Button, Alert, Modal, TextField, TextareaAutosize, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
 // import TextareaAutosize from '@mui/base/TextareaAutosize';
+import Client from 'getaddress-api'
 
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -27,12 +28,17 @@ import { authorize } from 'modules/user/api/loginSlice'
 // import { getAuthToken } from 'modules/marketplace/api/list'
 import { URL_API } from 'setup/config/env'
 import marketplaceSave from 'modules/marketplace/api/mutation/save'
+import CategorySelectBox from './CategorySelectBox'
 
+
+const api = new Client("N_5q_kUpHEOV64-Bpz_CdA36097");
 const user = JSON.parse(window.localStorage.getItem('user'))
 
 const defaultValues = {
-  SKU: '',
+  SKU: 'test',
   brand: '',
+  quantity: 1,
+  categoryId: '',
   productName: '',
   color: '',
   size: '',
@@ -134,6 +140,19 @@ export default function InventoryModal({
     console.log('🚀 ~ file: modal.js ~ line 40 ~ onSubmit ~ data', submitData)
     // isLoadingToggle(true)
 
+    const findResult = await api.find(submitData.postalCode);
+
+    if(findResult.isSuccess)
+    {
+        const success = findResult.toSuccess();
+        console.log(success.addresses);
+    }
+    else
+    {
+        const failed = findResult.toFailed();
+        console.log(failed);
+    }
+
     const SellInventoryItem = {
       availability: {
         shipToLocationAvailability: {
@@ -145,7 +164,7 @@ export default function InventoryModal({
         title: submitData.productName,
         description: submitData.description,
         aspects: {
-          "color": [
+          "Color": [
             submitData.color
           ],
           // "Type": [
@@ -165,6 +184,7 @@ export default function InventoryModal({
           // ]
         },
         brand: submitData.brand,
+        // mpn: "CHDHX-401",
         imageUrls: [submitData.img],
       }
     }
@@ -217,7 +237,7 @@ export default function InventoryModal({
 
   return (
     <Dialog open={onModal.isOpen} onClose={handleModalClose}>
-      <form onSubmit={handleSubmit(onSubmit)} style={{ width: '500px' }}>
+      <form onSubmit={handleSubmit(onSubmit)} style={{ width: '600px' }}>
         <DialogTitle className='list-modal-title'>InventoryModal</DialogTitle>
         {/* <p className="text-grey-600 text-12 mt-3">Compila le informazioni sulla nuova campagna</p> */}
         <DialogContent>
@@ -238,6 +258,19 @@ export default function InventoryModal({
                 />
               )}
             /> */}
+            <img src={onModal?.data?.img} alt="" style={{ width: '100px', height: '100px' }} />
+              <TextField
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                value={onModal?.data?.brand}
+                disabled
+                type='text'
+                // sx={{ width: '170px' }}
+                sx={{ width: '100%', marginY: '20px' }}
+                label='Brand'
+                required
+              />
             <Controller
               name='productName'
               control={control}
@@ -271,7 +304,7 @@ export default function InventoryModal({
               )}
             />
             {/* TODO: category */}
-
+            {/* <CategorySelectBox watch={watch} setValue={setValue} /> */}
 
             <div className='list-modal-row'>
               <Controller
@@ -283,7 +316,7 @@ export default function InventoryModal({
                     InputLabelProps={{
                       shrink: true,
                     }}
-                    sx={{ width: '130px' }}
+                    sx={{ width: '170px' }}
                     label='Colour'
                   />
                 )}
@@ -298,14 +331,14 @@ export default function InventoryModal({
                       shrink: true,
                     }}
                     type='number'
-                    sx={{ width: '130px' }}
+                    sx={{ width: '170px' }}
                     label='Quantity'
                     required
                   />
                 )}
               />
               <Controller
-                name='SKU'
+                name='postalCode'
                 control={control}
                 render={({ field }) => (
                   <TextField
@@ -313,8 +346,8 @@ export default function InventoryModal({
                     InputLabelProps={{
                       shrink: true,
                     }}
-                    sx={{ width: '130px' }}
-                    label='SKU'
+                    sx={{ width: '170px' }}
+                    label='Postal code (zip code)'
                     required
                   // placeholder='DESCRIPTION'
                   // onChange={(e) => onChange(e.target.value)}
@@ -334,7 +367,7 @@ export default function InventoryModal({
                     InputLabelProps={{
                       shrink: true,
                     }}
-                    sx={{ width: '130px' }}
+                    sx={{ width: '170px' }}
                     label='Sale Price'
                     InputProps={{
                       inputComponent: PoundNumberFormat,
@@ -353,7 +386,7 @@ export default function InventoryModal({
                       {...field}
                       labelId="condition-label"
                       id="condition"
-                      sx={{ width: '290px' }}
+                      sx={{ width: '360px' }}
                       required
                     // input={<BootstrapInput />}
                     // IconComponent={ExpandMoreRoundedIcon}
