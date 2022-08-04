@@ -121,9 +121,9 @@ export default function InventoryModal({ watch, setValue }) {
               InputLabelProps={{
                 shrink: true,
               }}
-              label='SubCategory'
+              label='Root Category'
               margin='normal'
-              required
+              // required
             />
           )}
           sx={{ width: '90%' }}
