@@ -87,7 +87,7 @@ export function PoundNumberFormat(props) {
       min={0}
       isNumericString
       // prefix="$"
-      suffix='£'
+      suffix=' £'
     />
   )
 }
