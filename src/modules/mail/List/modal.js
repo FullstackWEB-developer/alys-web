@@ -170,6 +170,7 @@ export default function InventoryModal({
       //   return (country != null) ? country.Region.TwoLetterISORegionName : '';
       // }
 
+      // TODO:
       const location = {
         address: {
           // addressLine1: success.addresses[0].line_1,
@@ -182,6 +183,7 @@ export default function InventoryModal({
         },
       }
 
+      // TODO:
       const sellInventoryItem = {
         availability: {
           shipToLocationAvailability: {
@@ -210,11 +212,12 @@ export default function InventoryModal({
             //   "10x"
             // ]
           },
-          brand: submitData.brand,
+          // brand: submitData.brand,
           // mpn: "CHDHX-401",
           imageUrls: [submitData.img],
         },
       }
+      // TODO:
       const ebayOfferDetailsWithId = {
         // availableQuantity: 75,
         categoryId: submitData.categoryId,
