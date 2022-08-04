@@ -4,7 +4,7 @@ import { useForm, Controller } from 'react-hook-form'
 import moment from 'moment'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import NumberFormat from 'react-number-format';
+import NumberFormat from 'react-number-format'
 import axios from 'axios'
 // import Ebay from 'ebay-node-api'
 
@@ -15,7 +15,18 @@ import { showMessage } from 'setup/messageSlice'
 // import { ebayAuthToken, scopes } from 'setup/oauth/ebay'
 import './style.css'
 
-import { Checkbox, Button, Alert, Modal, TextField, TextareaAutosize, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
+import {
+  Checkbox,
+  Button,
+  Alert,
+  Modal,
+  TextField,
+  TextareaAutosize,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from '@mui/material'
 // import TextareaAutosize from '@mui/base/TextareaAutosize';
 import Client from 'getaddress-api'
 
@@ -30,12 +41,11 @@ import { URL_API } from 'setup/config/env'
 import marketplaceSave from 'modules/marketplace/api/mutation/save'
 import CategorySelectBox from './CategorySelectBox'
 
-
-const api = new Client("N_5q_kUpHEOV64-Bpz_CdA36097");
+const api = new Client('N_5q_kUpHEOV64-Bpz_CdA36097')
 const user = JSON.parse(window.localStorage.getItem('user'))
 
 const defaultValues = {
-  SKU: 'test',
+  SKU: 'first',
   brand: '',
   quantity: 1,
   categoryId: '',
@@ -45,7 +55,7 @@ const defaultValues = {
   orderDate: '',
   price: '',
   img: '',
-  description: ''
+  description: '',
 }
 
 const conditions = [
@@ -57,7 +67,7 @@ const conditions = [
   { name: 'Used acceptable', value: 'USED_ACCEPTABLE' },
 ]
 export function PoundNumberFormat(props) {
-  const { inputRef, onChange, ...other } = props;
+  const { inputRef, onChange, ...other } = props
 
   return (
     <NumberFormat
@@ -68,7 +78,7 @@ export function PoundNumberFormat(props) {
           target: {
             value: values.value,
           },
-        });
+        })
       }}
       // decimalSeparator=","
       // thousandSeparator="."
@@ -77,9 +87,9 @@ export function PoundNumberFormat(props) {
       min={0}
       isNumericString
       // prefix="$"
-      suffix="£"
+      suffix='£'
     />
-  );
+  )
 }
 
 export default function InventoryModal({
@@ -115,16 +125,19 @@ export default function InventoryModal({
   const { isValid, dirtyFields, errors } = formState
 
   const initData = useCallback(() => {
-    reset({
-      ...defaultValues,
-      ...onModal.data,
-    })
+    if (onModal.data) {
+      reset({
+        ...defaultValues,
+        ...onModal.data,
+        price: onModal.data.price.replace(/[^0-9.,]/g, ''),
+      })
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onModal.data])
 
   // on load
   useEffect(() => {
-    initData();
+    initData()
     return () =>
       initData(
         reset({
@@ -140,98 +153,130 @@ export default function InventoryModal({
     console.log('🚀 ~ file: modal.js ~ line 40 ~ onSubmit ~ data', submitData)
     // isLoadingToggle(true)
 
-    const findResult = await api.find(submitData.postalCode);
+    const findResult = await api.find(submitData.postalCode)
 
-    if(findResult.isSuccess)
-    {
-        const success = findResult.toSuccess();
-        console.log(success.addresses);
-    }
-    else
-    {
-        const failed = findResult.toFailed();
-        console.log(failed);
-    }
+    if (findResult.isSuccess) {
+      const success = findResult.toSuccess()
+      console.log(
+        '🚀 ~ file: modal.js ~ line 147 ~ onSubmit ~ success',
+        success,
+      )
+      console.log(success.addresses)
 
-    const SellInventoryItem = {
-      availability: {
-        shipToLocationAvailability: {
-          quantity: submitData.quantity,
-        }
-      },
-      condition: submitData.condition,
-      product: {
-        title: submitData.productName,
-        description: submitData.description,
-        aspects: {
-          "Color": [
-            submitData.color
-          ],
-          // "Type": [
-          //   "Helmet/Action"
-          // ],
-          // "Storage Type": [
-          //   "Removable"
-          // ],
-          // "Recording Definition": [
-          //   "High Definition"
-          // ],
-          // "Media Format": [
-          //   "Flash Drive (SSD)"
-          // ],
-          // "Optical Zoom": [
-          //   "10x"
-          // ]
+      // function GetTwoLettersName(CountryName) {
+      //   const country = this.Countries.Where(info => info.Region.EnglishName == CountryName)
+      //     .FirstOrDefault();
+
+      //   return (country != null) ? country.Region.TwoLetterISORegionName : '';
+      // }
+
+      const location = {
+        address: {
+          // addressLine1: success.addresses[0].line_1,
+          // addressLine2: success.addresses[0].line_2,
+          // city: success.addresses[0].town_or_city,
+          // county: success.addresses[0].county,
+          // stateOrProvince: success.addresses[0].district,
+          postalCode: submitData.postalCode,
+          country: 'GB',
         },
-        brand: submitData.brand,
-        // mpn: "CHDHX-401",
-        imageUrls: [submitData.img],
       }
-    }
-    const EbayOfferDetailsWithId = {
-      // availableQuantity: 75,
-      // categoryId: '30120',
-      // listingDescription:
-      //   'Lumia phone with a stunning 5.7 inch Quad HD display and a powerful octa-core processor.',
 
-      // listingPolicies: {
-      //   fulfillmentPolicyId: '<fulfillmentPolicyId>',
-      //   paymentPolicyId: '<paymentPolicyId>',
-      //   returnPolicyId: '<returnPolicyId>',
-      // },
-      // merchantLocationKey: 'string',
-      pricingSummary: {
-        price: {
-          currency: 'GBP',
-          value: submitData.price,
+      const sellInventoryItem = {
+        availability: {
+          shipToLocationAvailability: {
+            quantity: submitData.quantity,
+          },
         },
-      },
+        condition: submitData.condition,
+        product: {
+          title: submitData.productName,
+          description: submitData.description,
+          aspects: {
+            Color: [submitData.color],
+            // "Type": [
+            //   "Helmet/Action"
+            // ],
+            // "Storage Type": [
+            //   "Removable"
+            // ],
+            // "Recording Definition": [
+            //   "High Definition"
+            // ],
+            // "Media Format": [
+            //   "Flash Drive (SSD)"
+            // ],
+            // "Optical Zoom": [
+            //   "10x"
+            // ]
+          },
+          brand: submitData.brand,
+          // mpn: "CHDHX-401",
+          imageUrls: [submitData.img],
+        },
+      }
+      const ebayOfferDetailsWithId = {
+        // availableQuantity: 75,
+        categoryId: submitData.categoryId,
+        // listingDescription:
+        //   'Lumia phone with a stunning 5.7 inch Quad HD display and a powerful octa-core processor.',
+
+        // listingPolicies: {
+        //   fulfillmentPolicyId: '<fulfillmentPolicyId>',
+        //   paymentPolicyId: '<paymentPolicyId>',
+        //   returnPolicyId: '<returnPolicyId>',
+        // },
+        // merchantLocationKey: 'string',
+        pricingSummary: {
+          price: {
+            currency: 'GBP',
+            value: submitData.price,
+          },
+        },
         // quantityLimitPerBuyer: 2,
         // includeCatalogProductDetails: true,
-    };
-    try {
-      const res = await marketplaceSave({ sku: submitData.SKU, body: { SellInventoryItem, EbayOfferDetailsWithId } })
-
-      if (res.data.success) {
-        dispatch(showMessage({
-          variant: 'success',
-          message: res.data.message,
-        }))
-        handleModalClose()
-      } else {
-        dispatch(showMessage({
-          variant: 'error',
-          message: res.data.message,
-        }))
       }
-    } catch (error) {
+      try {
+        const res = await marketplaceSave({
+          sku: submitData.SKU,
+          body: { sellInventoryItem, ebayOfferDetailsWithId, location },
+        })
+
+        if (res.data.success) {
+          dispatch(
+            showMessage({
+              variant: 'success',
+              message: res.data.message,
+            }),
+          )
+          handleModalClose()
+        } else {
+          dispatch(
+            showMessage({
+              variant: 'error',
+              message: res.data.message,
+            }),
+          )
+        }
+      } catch (error) {
+        dispatch(
+          showMessage({
+            message: error.message,
+            autoHideDuration: 3000,
+            variant: 'error',
+          }),
+        )
+      }
+    } else {
+      const failed = findResult.toFailed()
+      console.log('🚀 ~ file: modal.js ~ line 151 ~ onSubmit ~ failed', failed)
       dispatch(
         showMessage({
-          message: error.message,
-          autoHideDuration: 3000,
+          message: failed.message,
+          // autoHideDuration: 3000,
           variant: 'error',
-        })
-      );
+        }),
+      )
     }
   }
 
@@ -258,19 +303,23 @@ export default function InventoryModal({
                 />
               )}
             /> */}
-            <img src={onModal?.data?.img} alt="" style={{ width: '100px', height: '100px' }} />
-              <TextField
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                value={onModal?.data?.brand}
-                disabled
-                type='text'
-                // sx={{ width: '170px' }}
-                sx={{ width: '100%', marginY: '20px' }}
-                label='Brand'
-                required
-              />
+            <img
+              src={onModal?.data?.img}
+              alt=''
+              style={{ width: '100px', height: '100px' }}
+            />
+            <TextField
+              InputLabelProps={{
+                shrink: true,
+              }}
+              value={onModal?.data?.brand}
+              disabled
+              type='text'
+              // sx={{ width: '170px' }}
+              sx={{ width: '100%', marginY: '20px' }}
+              label='Brand'
+              required
+            />
             <Controller
               name='productName'
               control={control}
@@ -289,22 +338,21 @@ export default function InventoryModal({
             />
             <p style={{ marginBottom: '5px' }}>Description *</p>
             <Controller
-              name="description"
+              name='description'
               control={control}
               render={({ field }) => (
                 <TextareaAutosize
                   {...field}
                   sx={{ width: '100%', marginY: '20px' }}
                   // className="w-full h-156 border-2 rounded-8 p-12 border-grey-C7CD font-semibold"
-                  id="description"
+                  id='description'
                   minRows={7}
-                  
                   required
                 />
               )}
             />
             {/* TODO: category */}
-            {/* <CategorySelectBox watch={watch} setValue={setValue} /> */}
+            <CategorySelectBox watch={watch} setValue={setValue} />
 
             <div className='list-modal-row'>
               <Controller
@@ -349,8 +397,8 @@ export default function InventoryModal({
                     sx={{ width: '170px' }}
                     label='Postal code (zip code)'
                     required
-                  // placeholder='DESCRIPTION'
-                  // onChange={(e) => onChange(e.target.value)}
+                    // placeholder='DESCRIPTION'
+                    // onChange={(e) => onChange(e.target.value)}
                   />
                 )}
               />
@@ -363,7 +411,6 @@ export default function InventoryModal({
                 render={({ field }) => (
                   <TextField
                     {...field}
-
                     InputLabelProps={{
                       shrink: true,
                     }}
@@ -381,15 +428,21 @@ export default function InventoryModal({
                 control={control}
                 render={({ field }) => (
                   <FormControl>
-                    <InputLabel shrink={true} id="condition-label" sx={{backgroundColor: 'white'}}>Condition</InputLabel>
+                    <InputLabel
+                      shrink={true}
+                      id='condition-label'
+                      sx={{ backgroundColor: 'white' }}
+                    >
+                      Condition
+                    </InputLabel>
                     <Select
                       {...field}
-                      labelId="condition-label"
-                      id="condition"
+                      labelId='condition-label'
+                      id='condition'
                       sx={{ width: '360px' }}
                       required
-                    // input={<BootstrapInput />}
-                    // IconComponent={ExpandMoreRoundedIcon}
+                      // input={<BootstrapInput />}
+                      // IconComponent={ExpandMoreRoundedIcon}
                     >
                       {conditions.map((condition) => (
                         <MenuItem key={condition.value} value={condition.value}>

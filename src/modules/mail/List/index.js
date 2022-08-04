@@ -9,7 +9,7 @@ import moment from 'moment'
 // UI imports
 // import Button from 'ui/Button'
 // import Input from 'ui/Input'
-import { showMessage } from 'setup/messageSlice';
+import { showMessage } from 'setup/messageSlice'
 import './style.css'
 import GetMailCheckbox from './checkbox'
 import InventoryModal from './modal'
@@ -22,14 +22,14 @@ import { SET_CHECK, SET_INIT } from 'modules/mail/api/actions/types'
 import { URL_WEB } from 'setup/config/env'
 
 const brands = [
-    'zara',
-    'zalando',
-    'marksandspencer',
-    'ikea',
-    'next',
-    'wayfair',
-    // 'nike',
-    // 'asos',
+  'zara',
+  'zalando',
+  'marksandspencer',
+  'ikea',
+  'next',
+  'wayfair',
+  // 'nike',
+  // 'asos',
 ]
 
 // Component
@@ -45,7 +45,7 @@ const List = () => {
     isError: false,
     data: null,
   })
-  console.log("🚀 ~ file: index.js ~ line 165 ~ List ~ onModal", onModal)
+  console.log('🚀 ~ file: index.js ~ line 165 ~ List ~ onModal', onModal)
   const checked = useSelector((state) => state.mail.check)
 
   // on load
@@ -55,27 +55,31 @@ const List = () => {
   }, [])
 
   useEffect(() => {
-    if (checked.length === 0) setMails([
-    //   {brand: 'product.brand',
-    //   productName: 'product.productName',
-    //   color: 'product.color',
-    //   size: 'product.size',
-    //   orderDate: 'product.orderDate',
-    //   mailId: 1,
-    //   price: 'product.price',
-    //   img: 'product.img',
-    //   category: 'categoryList[i]',
-    // }, {
-    //   mailId: 2,
-    //   brand: 'product.brand2',
-    //   productName: 'product.productName2',
-    //   color: 'product.color2',
-    //   size: 'product.size2',
-    //   orderDate: 'product.orderDate2',
-    //   price: 'product.price2',
-    //   img: 'product.img2',
-    //   category: 'categoryList[i]2',}
-    ])
+    if (checked.length === 0)
+      setMails([
+        {
+          brand: 'product.brand',
+          productName: 'product.productName',
+          color: 'product.color',
+          size: 'product.size',
+          orderDate: 'product.orderDate',
+          mailId: 1,
+          price: 'product.price',
+          img: 'product.img',
+          category: 'categoryList[i]',
+        },
+        {
+          mailId: 2,
+          brand: 'product.brand2',
+          productName: 'product.productName2',
+          color: 'product.color2',
+          size: 'product.size2',
+          orderDate: 'product.orderDate2',
+          price: 'product.price2',
+          img: 'product.img2',
+          category: 'categoryList[i]2',
+        },
+      ])
   }, [checked])
 
   // // refresh
@@ -194,7 +198,7 @@ const List = () => {
               <th>SPECIFICATIONS TBC</th>
               <th>Image</th>
             </tr>
-            {(mails.length === 0 || isLoading) ? (
+            {mails.length === 0 || isLoading ? (
               <tr>
                 <td colSpan={9} style={{ textAlign: 'center' }}>
                   {isLoading ? (
@@ -203,21 +207,31 @@ const List = () => {
                       alt='loading...'
                       height={24}
                     />
-                  ) : 'You have not added any mails.'}
+                  ) : (
+                    'You have not added any mails.'
+                  )}
                 </td>
               </tr>
             ) : (
               mails.map((mail, i) => {
                 return (
-                  <tr key={i} tabIndex={i + 1}
-                    aria-hidden="true" role="button" style={{ cursor: "pointer" }} onClick={() => onListSelect(mail)}>
+                  <tr
+                    key={i}
+                    tabIndex={i + 1}
+                    aria-hidden='true'
+                    role='button'
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => onListSelect(mail)}
+                  >
                     <td>{i + 1}</td>
                     <td>{mail.brand}</td>
                     <td>{mail.productName}</td>
                     {/* <td>{mail.category}</td> */}
                     <td>{mail.color}</td>
                     <td>{mail.size}</td>
-                    <td>{moment(new Date(mail.orderDate)).format('yyyy/MM/DD')}</td>
+                    <td>
+                      {moment(new Date(mail.orderDate)).format('yyyy/MM/DD')}
+                    </td>
                     <td>{mail.price}</td>
                     <td></td>
                     <td>
