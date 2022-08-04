@@ -48,13 +48,52 @@ export default function InventoryModal({ watch, setValue }) {
   // const filterOptions = (options, { inputValue }) => matchSorter(options.map((option) => option.categoryName), inputValue)
 
   const filterOptions = createFilterOptions({
-    matchFrom: 'start',
-    stringify: (option) => option?.categoryName,
+    // matchFrom: 'start',
+    stringify: (option) => option?.category?.categoryName,
   })
 
   return (
     <div className='select-box'>
       <Autocomplete
+        disablePortal
+        id='category-root'
+        // value={rootValue}
+        onChange={(event, newValue) => {
+          // setRootValue(newValue)
+          setValue('categoryId', newValue.category.categoryId)
+        }}
+        options={categories}
+        getOptionLabel={(option) => option?.category?.categoryName}
+        filterOptions={filterOptions}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            label='Suggested Category'
+            margin='normal'
+            required
+          />
+        )}
+        renderOption={(props, option, state) => {
+          return (
+            <li {...props}>
+              <div style={{ fontSize: '14px' }}>
+                {option?.category?.categoryName}
+                {option?.categoryTreeNodeAncestors.map((item) => (
+                  <span key={item?.categoryTreeNodeLevel}>
+                    {' > '}
+                    {item?.categoryName}
+                  </span>
+                ))}
+              </div>
+            </li>
+          )
+        }}
+        sx={{ width: '100%' }}
+      />
+      {/* <Autocomplete
         disablePortal
         id='category-root'
         // value={rootValue}
@@ -133,7 +172,7 @@ export default function InventoryModal({ watch, setValue }) {
             }
           }
         />
-      )}
+      )} */}
     </div>
   )
 }
