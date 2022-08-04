@@ -12,6 +12,7 @@ import axios from 'axios'
 // import Button from 'ui/Button'
 // import Input from 'ui/Input'
 import { showMessage } from 'setup/messageSlice'
+import { marketplaceCategory } from '../../marketplace/api/query'
 // import { ebayAuthToken, scopes } from 'setup/oauth/ebay'
 import './style.css'
 
@@ -98,7 +99,7 @@ export default function InventoryModal({
   handleModalClose,
 }) {
   const dispatch = useDispatch()
-  // const [change, setChange] = useState('')
+  // const [change, setChange] = useState("")
 
   /**
    * Form Validation Schema
@@ -130,6 +131,26 @@ export default function InventoryModal({
         ...defaultValues,
         ...onModal.data,
         price: onModal.data.price.replace(/[^0-9.,]/g, ''),
+        aspects: {
+          Brand: [onModal.data.brand],
+          // Colour: [submitData.color],
+          // Type: ["type"],
+          // Width: ["width"],
+          // Height: ["height"],
+          // Length: ["Length"],
+          // "Storage Type": [
+          //   "Removable"
+          // ],
+          // "Recording Definition": [
+          //   "High Definition"
+          // ],
+          // "Media Format": [
+          //   "Flash Drive (SSD)"
+          // ],
+          // "Optical Zoom": [
+          //   "10x"
+          // ]
+        },
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -194,26 +215,10 @@ export default function InventoryModal({
         product: {
           title: submitData.productName,
           description: submitData.description,
-          aspects: {
-            Color: [submitData.color],
-            // "Type": [
-            //   "Helmet/Action"
-            // ],
-            // "Storage Type": [
-            //   "Removable"
-            // ],
-            // "Recording Definition": [
-            //   "High Definition"
-            // ],
-            // "Media Format": [
-            //   "Flash Drive (SSD)"
-            // ],
-            // "Optical Zoom": [
-            //   "10x"
-            // ]
-          },
-          // brand: submitData.brand,
+          aspects: submitData.aspects,
+          brand: submitData.brand,
           // mpn: "CHDHX-401",
+          mpn: submitData.aspects?.MPN,
           imageUrls: [submitData.img],
         },
       }

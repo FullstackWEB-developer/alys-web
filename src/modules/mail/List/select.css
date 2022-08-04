@@ -5,7 +5,20 @@
   align-items: flex-end;
   position: relative;
 }
-
+.aspect-title {
+  margin-top: 20px;
+  width: 100%;
+}
+.aspect-box {
+  display: flex;
+  flex-direction: row;
+  margin: 20px 0;
+  width: 100%;
+  /* align-items: flex-end; */
+  /* position: relative; */
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
 .select-box .select-check.MuiAutocomplete-root:after {
   content: '';
   display: block;

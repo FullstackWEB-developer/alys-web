@@ -56,30 +56,7 @@ const List = () => {
 
   useEffect(() => {
     if (checked.length === 0)
-      setMails([
-        {
-          brand: 'product.brand',
-          productName: 'product.productName',
-          color: 'product.color',
-          size: 'product.size',
-          orderDate: 'product.orderDate',
-          mailId: 1,
-          price: 'product.price',
-          img: 'product.img',
-          category: 'categoryList[i]',
-        },
-        {
-          mailId: 2,
-          brand: 'product.brand2',
-          productName: 'product.productName2',
-          color: 'product.color2',
-          size: 'product.size2',
-          orderDate: 'product.orderDate2',
-          price: 'product.price2',
-          img: 'product.img2',
-          category: 'categoryList[i]2',
-        },
-      ])
+      setMails([])
   }, [checked])
 
   // // refresh

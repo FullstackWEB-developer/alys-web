@@ -19,12 +19,15 @@ export default function InventoryModal({ watch, setValue }) {
   )
   const [subCategories, setSubCategories] = useState([])
   const [rootValue, setRootValue] = useState()
+  const [aspects, setAspects] = useState([])
+
+  const categoryId = watch('categoryId')
   const productName = watch('productName')
 
   // on load
   useEffect(() => {
     marketplaceCategory({
-      type: 'suggestions',
+      type: 'getCategorySuggestions',
       body: { category: productName },
     }).then(({ data }) => {
       if (data.success) {
@@ -42,14 +45,51 @@ export default function InventoryModal({ watch, setValue }) {
     )?.categoryTreeNodeAncestors
     if (_subCategories) {
       setSubCategories(_subCategories)
+    } else {
+      setSubCategories([])
     }
   }, [rootValue])
+
+  // get aspects
+  useEffect(() => {
+    if (categoryId) {
+      marketplaceCategory({
+        type: 'getItemAspectsForCategory',
+        body: { category: categoryId },
+      }).then(({ data }) => {
+        if (data.success) {
+          console.log(
+            '🚀 ~ file: modal.js ~ line 159 ~ useEffect ~ data.data',
+            data.data,
+          )
+          setAspects(
+            data.data.filter(
+              (aspect) =>
+                (aspect?.localizedAspectName !== 'Brand' &&
+                  aspect?.aspectConstraint?.aspectRequired) ||
+                aspect?.localizedAspectName === 'MPN',
+            ),
+          )
+        } else {
+          dispatch(showMessage({ message: data.message, variant: 'error' }))
+        }
+      })
+    } else {
+      setAspects([])
+    }
+    // return () => dispatch({ type: SET_INIT })
+  }, [categoryId])
 
   // const filterOptions = (options, { inputValue }) => matchSorter(options.map((option) => option.categoryName), inputValue)
 
   const filterOptions = createFilterOptions({
     // matchFrom: 'start',
     stringify: (option) => option?.category?.categoryName,
+  })
+
+  const aspectFilterOptions = createFilterOptions({
+    // matchFrom: 'start',
+    stringify: (option) => option?.localizedValue,
   })
 
   return (
@@ -60,7 +100,10 @@ export default function InventoryModal({ watch, setValue }) {
         // value={rootValue}
         onChange={(event, newValue) => {
           // setRootValue(newValue)
-          setValue('categoryId', newValue.category.categoryId)
+          setValue(
+            'categoryId',
+            newValue?.category?.categoryId ? newValue.category.categoryId : '',
+          )
         }}
         options={categories}
         getOptionLabel={(option) => option?.category?.categoryName}
@@ -173,6 +216,67 @@ export default function InventoryModal({ watch, setValue }) {
           }
         />
       )} */}
+      {aspects.length > 0 && (
+        <>
+          <h3 className='aspect-title'>Item specifics</h3>
+          <div className='aspect-box'>
+            {['MPN', 'Department', 'Size', 'Style'].map((item) => {
+              return (
+                <TextField
+                  key={item}
+                  onChange={(event) => {
+                    setValue(`aspects.${item}`, [event.target.value])
+                  }}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  sx={{ width: '100%', marginBottom: '10px' }}
+                  label={item}
+                  required
+                />
+              )
+            })}
+            {aspects.map((aspect) => {
+              if (
+                aspect?.localizedAspectName === 'Brand' ||
+                !aspect?.aspectConstraint?.aspectRequired
+              ) {
+                return null
+              }
+              const options = aspect?.aspectValues?.map(
+                (option) => option.localizedValue,
+              )
+              return (
+                <Autocomplete
+                  multiple
+                  limitTags={2}
+                  key={aspect?.localizedAspectName}
+                  id={`aspects.${aspect?.localizedAspectName}`}
+                  // value={rootValue}
+                  onChange={(event, newValue) => {
+                    setValue(`aspects.${aspect?.localizedAspectName}`, newValue)
+                  }}
+                  options={options}
+                  // getOptionLabel={(option) => option?.localizedValue}
+                  // filterOptions={aspectFilterOptions}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      label={`${aspect?.localizedAspectName}`}
+                      margin='normal'
+                      // required={aspect?.aspectConstraint?.aspectRequired}
+                    />
+                  )}
+                  sx={{ width: '48%' }}
+                />
+              )
+            })}
+          </div>
+        </>
+      )}
     </div>
   )
 }
