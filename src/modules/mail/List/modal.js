@@ -215,9 +215,9 @@ export default function InventoryModal({
           title: submitData.productName,
           description: submitData.description,
           aspects: submitData.aspects,
-          brand: submitData.brand,
+          // brand: submitData.brand,
           // mpn: "CHDHX-401",
-          mpn: submitData.aspects?.MPN ? submitData.aspects.MPN[0] : '',
+          // mpn: submitData.aspects?.MPN ? submitData.aspects.MPN[0] : '',
           imageUrls: [submitData.img],
         },
       }
