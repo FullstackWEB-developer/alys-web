@@ -220,7 +220,7 @@ export default function InventoryModal({ watch, setValue }) {
         <>
           <h3 className='aspect-title'>Item specifics</h3>
           <div className='aspect-box'>
-            {['MPN', 'Department', 'Size', 'Style'].map((item) => {
+            {/* {['MPN', 'Department', 'Size', 'Style'].map((item) => {
               return (
                 <TextField
                   key={item}
@@ -235,7 +235,7 @@ export default function InventoryModal({ watch, setValue }) {
                   required
                 />
               )
-            })}
+            })} */}
             {aspects.map((aspect) => {
               if (
                 aspect?.localizedAspectName === 'Brand' ||

@@ -54,8 +54,6 @@ const List = ({ history, location }) => {
       try {
         const { data } = await authorize({ ...query, user: user.email })
         // const data = await ebayAuthToken.exchangeCodeForAccessToken(OAUTH_EBAY_ENV, query.code);
-        console.log('🚀 ~ file: index.js ~ line 56 ~ process ~ data', data)
-
         if (data.data?.refresh_token) {
           // setTokens({ ...tokens, ebay_tokens: true })
           setTokens(data.data)
