@@ -153,7 +153,6 @@ export default function InventoryModal({
         },
       })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onModal.data])
 
   // on load
