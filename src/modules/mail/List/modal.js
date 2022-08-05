@@ -51,8 +51,8 @@ const defaultValues = {
   quantity: 1,
   categoryId: '',
   productName: '',
-  color: '',
-  size: '',
+  // color: '',
+  // size: '',
   orderDate: '',
   price: '',
   img: '',
@@ -362,7 +362,7 @@ export default function InventoryModal({
             <CategorySelectBox watch={watch} setValue={setValue} />
 
             <div className='list-modal-row'>
-              <Controller
+              {/* <Controller
                 name='color'
                 control={control}
                 render={({ field }) => (
@@ -373,6 +373,23 @@ export default function InventoryModal({
                     }}
                     sx={{ width: '170px' }}
                     label='Colour'
+                  />
+                )}
+              /> */}
+              <Controller
+                name='SKU'
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    sx={{ width: '170px' }}
+                    label='SKU'
+                    required
+                    // placeholder='DESCRIPTION'
+                    // onChange={(e) => onChange(e.target.value)}
                   />
                 )}
               />
@@ -431,23 +448,6 @@ export default function InventoryModal({
                 )}
               />
               <Controller
-                name='SKU'
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    sx={{ width: '170px' }}
-                    label='SKU'
-                    required
-                    // placeholder='DESCRIPTION'
-                    // onChange={(e) => onChange(e.target.value)}
-                  />
-                )}
-              />
-              <Controller
                 name='condition'
                 control={control}
                 render={({ field }) => (
@@ -463,8 +463,8 @@ export default function InventoryModal({
                       {...field}
                       labelId='condition-label'
                       id='condition'
-                      sx={{ width: '170px' }}
-                      // sx={{ width: '360px' }}
+                      // sx={{ width: '170px' }}
+                      sx={{ width: '360px' }}
                       required
                       // input={<BootstrapInput />}
                       // IconComponent={ExpandMoreRoundedIcon}
