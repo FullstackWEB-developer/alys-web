@@ -48,6 +48,9 @@
       "pre-commit": "pretty-quick --staged"
     }
   },
+  "engines": {
+    "node": "16.x"
+  },
   "browserslist": {
     "production": [
       ">0.2%",
