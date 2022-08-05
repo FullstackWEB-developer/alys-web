@@ -46,7 +46,7 @@ const api = new Client('N_5q_kUpHEOV64-Bpz_CdA36097')
 const user = JSON.parse(window.localStorage.getItem('user'))
 
 const defaultValues = {
-  SKU: 'first',
+  SKU: '',
   brand: '',
   quantity: 1,
   categoryId: '',
@@ -63,9 +63,9 @@ const conditions = [
   { name: 'New', value: 'NEW' },
   // { name: 'Like new', value: 'LIKE_NEW' },
   // { name: 'New with defects', value: 'NEW_WITH_DEFECTS'},
-  { name: 'Used excellent', value: 'USED_EXCELLENT' },
-  { name: 'Used good', value: 'USED_GOOD' },
-  { name: 'Used acceptable', value: 'USED_ACCEPTABLE' },
+  { name: 'Used', value: 'USED_EXCELLENT' },
+  // { name: 'Used good', value: 'USED_GOOD' },
+  // { name: 'Used acceptable', value: 'USED_ACCEPTABLE' },
 ]
 export function PoundNumberFormat(props) {
   const { inputRef, onChange, ...other } = props
@@ -350,7 +350,7 @@ export default function InventoryModal({
               render={({ field }) => (
                 <TextareaAutosize
                   {...field}
-                  sx={{ width: '100%', marginY: '20px' }}
+                  style={{ width: '100%', padding: '12px', fontSize: '16px' }}
                   // className="w-full h-156 border-2 rounded-8 p-12 border-grey-C7CD font-semibold"
                   id='description'
                   minRows={7}
@@ -431,6 +431,23 @@ export default function InventoryModal({
                 )}
               />
               <Controller
+                name='SKU'
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    sx={{ width: '170px' }}
+                    label='SKU'
+                    required
+                    // placeholder='DESCRIPTION'
+                    // onChange={(e) => onChange(e.target.value)}
+                  />
+                )}
+              />
+              <Controller
                 name='condition'
                 control={control}
                 render={({ field }) => (
@@ -446,7 +463,8 @@ export default function InventoryModal({
                       {...field}
                       labelId='condition-label'
                       id='condition'
-                      sx={{ width: '360px' }}
+                      sx={{ width: '170px' }}
+                      // sx={{ width: '360px' }}
                       required
                       // input={<BootstrapInput />}
                       // IconComponent={ExpandMoreRoundedIcon}
