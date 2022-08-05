@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import TextField from '@mui/material/TextField'
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete'
-import { matchSorter } from 'match-sorter'
+// import { matchSorter } from 'match-sorter'
 
 import { showMessage } from 'setup/messageSlice'
 import { marketplaceCategory } from '../../marketplace/api/query'
