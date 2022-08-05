@@ -61,7 +61,7 @@ const defaultValues = {
 
 const conditions = [
   { name: 'New', value: 'NEW' },
-  { name: 'Like new', value: 'LIKE_NEW' },
+  // { name: 'Like new', value: 'LIKE_NEW' },
   // { name: 'New with defects', value: 'NEW_WITH_DEFECTS'},
   { name: 'Used excellent', value: 'USED_EXCELLENT' },
   { name: 'Used good', value: 'USED_GOOD' },
@@ -215,8 +215,8 @@ export default function InventoryModal({
           title: submitData.productName,
           description: submitData.description,
           aspects: submitData.aspects,
-          brand: '',
-          mpn: '',
+          // brand: submitData.brand,
+          // mpn: "CHDHX-401",
           // mpn: submitData.aspects?.MPN ? submitData.aspects.MPN[0] : '',
           imageUrls: [submitData.img],
         },

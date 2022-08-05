@@ -55,8 +55,7 @@ const List = () => {
   }, [])
 
   useEffect(() => {
-    if (checked.length === 0)
-      setMails([])
+    if (checked.length === 0) setMails([])
   }, [checked])
 
   // // refresh
@@ -201,7 +200,7 @@ const List = () => {
                     onClick={() => onListSelect(mail)}
                   >
                     <td>{i + 1}</td>
-                    <td>{mail.brand}</td>
+                    <td style={{ textTransform: 'uppercase' }}>{mail.brand}</td>
                     <td>{mail.productName}</td>
                     {/* <td>{mail.category}</td> */}
                     <td>{mail.color}</td>
